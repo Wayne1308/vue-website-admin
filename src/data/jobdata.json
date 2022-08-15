@@ -1,0 +1,22 @@
+{
+	"pageNo":1,
+	"pageSize":15,
+	"totalPage":1,
+	"total":4,
+	"datas":[{
+		"id":1,
+		"name": "业务经理",
+		"limitcount": "1",
+		"need": "本科学历，具有3-5年工作经验……",
+		"content": "负责日常文档编写…………",
+		"description": ""
+	},{
+		"id":2,
+		"name": "业务经理",
+		"limitcount": "2",
+		"need": "本科学历，具有3-5年工作经验……",
+		"content": "负责日常文档编写…………",
+		"description": ""
+	}]
+	
+}

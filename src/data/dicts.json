@@ -1,0 +1,23 @@
+{
+	"news_status": [{
+		"id": 1,
+		"key": "news_status",
+		"value": "1",
+		"label": "待审核"
+	}, {
+		"id": 2,
+		"key": "news_status",
+		"value": "2",
+		"label": "待发布"
+	}, {
+		"id": 3,
+		"key": "news_status",
+		"value": "3",
+		"label": "已取消"
+	}, {
+		"id": 4,
+		"key": "news_status",
+		"value": "4",
+		"label": "已删除"
+	}]
+}

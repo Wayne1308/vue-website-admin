@@ -1,0 +1,35 @@
+{
+	"pageNo":1,
+	"pageSize":15,
+	"totalPage":1,
+	"total":4,
+	"datas":[{
+		"id":1,
+		"name": "首页",
+		"icon": "/src/assets/1.jpeg",
+		"parent": null,
+		"url":"/content/sss",
+		"description": ""
+	},{
+		"id":2,
+		"name": "首页",
+		"icon": "/src/assets/1.jpeg",
+		"parent": null,
+		"url":"/content/sss",
+		"description": ""
+	},{
+		"id":3,
+		"name": "首页",
+		"icon": "/src/assets/1.jpeg",
+		"parent": null,
+		"url":"/content/sss",
+		"description": ""
+	},{
+		"name": "首页",
+		"icon": "/src/assets/1.jpeg",
+		"parent": null,
+		"url":"/content/sss",
+		"description": ""
+	}]
+	
+}

@@ -1,0 +1,88 @@
+[
+	{
+		"id": 1,
+		"name": "首页",
+		"icon": "House",
+		"url": "Index",
+		"childrens": []
+	},
+	{
+		"id": 2,
+		"name": "系统状态",
+		"icon": "List",
+		"url": "SysStatus",
+		"childrens": []
+	},
+	{
+		"id": 3,
+		"name": "高级设置",
+		"icon": "View",
+		"url": "Record",
+		"childrens": [
+			{
+				"id": 31,
+				"name": "WAN口设置",
+				"icon": "Tickets",
+				"url": "SeniorSetWan"
+			},
+			{
+				"id": 32,
+				"name": "WAN口参数",
+				"icon": "Tickets",
+				"url": "SeniorSetWanParameter"
+			}
+		]
+	},
+	{
+		"id": 4,
+		"name": "无线设置(demo)",
+		"icon": "TakeawayBox",
+		"url": "",
+		"childrens": [
+			{
+				"id": 41,
+				"name": "5G模块调试",
+				"icon": "Tickets",
+				"url": "GenralSet"
+			},
+			{
+				"id": 42,
+				"name": "基本设置",
+				"icon": "UserFilled",
+				"url": "GeneralSetBasic"
+			},
+			{
+				"id": 43,
+				"name": "安全mac过滤",
+				"icon": "Avatar",
+				"url": "WirdLessSetControl"
+			}
+		]
+	},
+	{
+		"id": 5,
+		"name": "路由器图表",
+		"icon": "Setting",
+		"url": "",
+		"childrens": [
+			{
+				"id": 51,
+				"name": "路由器测试",
+				"icon": "User",
+				"url": "RouterDiagram"
+			},
+			{
+				"id": 52,
+				"name": "温度模块",
+				"icon": "Open",
+				"url": "Temperature"
+			},
+			{
+				"id": 53,
+				"name": "九轴模块",
+				"icon": "Operation",
+				"url": "NineShaft"
+			}
+		]
+	}
+]

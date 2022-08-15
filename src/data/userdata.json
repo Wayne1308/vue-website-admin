@@ -1,0 +1,52 @@
+{
+	"pageNo":1,
+	"pageSize":15,
+	"totalPage":1,
+	"total":4,
+	"datas":[{
+		"id":1,
+		"username": "admin",
+		"name": "系统管理员",
+		"phone": "1500000",
+		"password": "admin",
+		"role": {
+			"id":1,
+			"name":"系统管理员"
+		},
+		"description": ""
+	},{
+		"id":2,
+		"username": "admin",
+		"name": "系统管理员",
+		"phone": "1500000",
+		"password": "admin",
+		"role": {
+			"id":1,
+			"name":"系统管理员"
+		},
+		"description": ""
+	},{
+		"id":3,
+		"username": "admin",
+		"name": "系统管理员",
+		"phone": "1500000",
+		"password": "admin",
+		"role": {
+			"id":1,
+			"name":"系统管理员"
+		},
+		"description": ""
+	},{
+		"id":4,
+		"username": "admin",
+		"name": "系统管理员",
+		"phone": "1500000",
+		"password": "admin",
+		"role": {
+			"id":1,
+			"name":"系统管理员"
+		},
+		"description": ""
+	}]
+	
+}
