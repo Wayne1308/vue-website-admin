@@ -1,7 +1,8 @@
 <template>
 	<div class="page-layout">
 		<el-container>
-			<el-header v-if="islogin"
+			<router-view v-if="islogin && isChart()"></router-view>
+			<el-header v-if="islogin && !isChart()"
 				style="solid #040404ad;background-color: #000;box-shadow: rgb(0 0 0 / 8%) 0px 5px 5px 5px;z-index: 1;position: fixed;top:0px;left:0px;width:100%;height:60px">
 				<TopBar @loginout='loginout' :userinfo="userinfo"></TopBar>
 			</el-header>
@@ -14,11 +15,15 @@
 	import api from "./public/api.js";
 
 	import TopBar from "./components/TopBar.vue";
+	import Chart from './pages/Chart.vue'
 
+	import { useRoute, useRouter } from 'vue-router';
+	import { onMounted, computed, ref } from 'vue';
 	export default {
 		//components组件注册
 		components: {
-			TopBar
+			TopBar,
+			Chart
 		},
 		//为变量赋值
 		data() {
@@ -61,6 +66,17 @@
 					}
 					that.userinfo = res.data;
 				});
+			},
+
+		},
+		setup() {
+			const route = new useRoute();
+
+			const isChart = () => {
+				return route.meta?.view === 'hytxsysgk-chart'
+			}
+			return {
+				isChart
 			}
 		}
 	}
