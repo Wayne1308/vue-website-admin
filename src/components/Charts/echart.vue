@@ -4,6 +4,7 @@
 <script>
 import _ from 'lodash';
 import * as echarts from 'echarts'
+import { markRaw } from 'vue'
 
 export default {
   name: 'Echart',
@@ -87,7 +88,7 @@ export default {
         this.instance.clear();
       } else {
         if (this.map) this.registerMap(this.map);
-        this.instance = echarts.init(this.$refs[this.id]);
+        this.instance = markRaw(echarts.init(this.$refs[this.id]));
         this.bindEvent();
       }
     },

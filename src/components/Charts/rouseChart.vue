@@ -25,7 +25,7 @@ export default defineComponent({
 
         const lineChartOption = {
             grid: {
-                show: true,
+                show: false,
                 left: 10,
                 right: 10,
                 top: 10,

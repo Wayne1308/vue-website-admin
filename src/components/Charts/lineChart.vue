@@ -1,5 +1,5 @@
 <template>
-    <echart :option="lineChartOption"></echart>
+    <echart :option="options"></echart>
     <!-- <div id="charts-box"></div> -->
 </template>
 
@@ -23,9 +23,9 @@ export default defineComponent({
     },
     setup(props, { emit }) {
 
-        const lineChartOption = {
+        const options = {
             grid: {
-                show: true,
+                show: false,
                 left: '10%',
                 right: 10,
                 top: 10,
@@ -40,13 +40,13 @@ export default defineComponent({
             },
             series: [
                 {
-                data: [150, 230, 224, 218, 135, 147, 260],
-                type: 'line'
+                    type: 'line',
+                    data: [150, 230, 224, 218, 135, 147, 260],
                 }
             ]
         }
         return {
-            lineChartOption
+            options
         }
     }
 })

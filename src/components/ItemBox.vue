@@ -32,12 +32,13 @@ export default defineComponent({
 .item-box-container {
     height: 100%;
     width: 100%;
-    border: 1px solid red;
+    background: url('../assets/charts/item.png') no-repeat;
+    background-size: 100% 100%;
 
     .item-title {
         width: 100%;
         height: 20px;
-        color: red;
+        color: #FFFFFF;
         display: flex;
         align-items: center;
         justify-content: center;
