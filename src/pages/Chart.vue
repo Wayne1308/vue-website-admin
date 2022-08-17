@@ -1,6 +1,9 @@
 <template>
     <el-container class="chart-container">
-        <el-header class="chart-header" height="60px">111</el-header>
+        <el-header class="chart-header" height="60px">
+            <span class="title">海洋通信实验室概况</span>
+            <span class="goAdmin" @click="goAdmin" title="进入后台">进入后台 >></span>
+        </el-header>
         <el-main class="chart-main">
             <mat-row direction="column">
                 <mat-col :span="3">
@@ -9,41 +12,29 @@
                             <mat-row direction="column">
                                 <mat-col gutter="5">
                                     <item-box title="信号强度">
-                                        <line-chart></line-chart>
+                                        <line-chart :config="xhqdData"></line-chart>
                                     </item-box>
                                 </mat-col>
                                 <mat-col gutter="5">
                                     <item-box title="Iperf">
-                                        <line-chart></line-chart>
+                                        <line-chart :config="iperfData"></line-chart>
                                     </item-box>
                                 </mat-col>
                                 <mat-col gutter="5">
                                     <item-box title="营收状况">
-                                        <line-chart></line-chart>
+                                        <line-chart :config="yszkData"></line-chart>
                                     </item-box>
                                 </mat-col>
                             </mat-row>
                         </mat-col>
                         <mat-col :span="2">
                             <mat-row direction="column">
-                                <mat-col :span="1">
-                                    <mat-row>
-                                        <mat-col>
+                                <mat-col :span="1" gutter="5px">
+                                    <mat-row class="number-container">
+                                        <mat-col v-for="(item, i) in  hytxsysgsData" :key="i">
                                             <div class="number-box">
-                                                <div>24</div>
-                                                <span class="text">实验室总人数(单位：人)</span>
-                                            </div>
-                                        </mat-col>
-                                        <mat-col>
-                                            <div class="number-box">
-                                                <div>24</div>
-                                                <span class="text">实验室总人数(单位：人)</span>
-                                            </div>
-                                        </mat-col>
-                                        <mat-col>
-                                            <div class="number-box">
-                                                <div>24</div>
-                                                <span class="text">实验室总人数(单位：人)</span>
+                                                <div>{{ item.value }}</div>
+                                                <span class="text">{{ item.text }}(单位：{{ item.unit }})</span>
                                             </div>
                                         </mat-col>
                                     </mat-row>
@@ -82,8 +73,8 @@
                 <mat-col :span="1">
                     <mat-row>
                         <mat-col gutter="5">
-                            <item-box title="信号强度">
-                              <line-chart></line-chart>
+                            <item-box title="九轴数据图">
+                              <line-chart :config="jzsjData"></line-chart>
                             </item-box>
                         </mat-col>
                     </mat-row>
@@ -95,6 +86,7 @@
 
 <script>
 import { defineComponent } from 'vue'
+import { useRoute, useRouter } from 'vue-router';
 import utils from "../public/utils.js";
 import api from "../public/api.js";
 import $ from 'jquery';
@@ -106,6 +98,12 @@ import lineChart from '../components/Charts/lineChart.vue';
 import gaugeChart from '../components/Charts/gaugeChart.vue';
 import rouseChart from '../components/Charts/rouseChart.vue';
 import mapShow from '../components/Charts/map.vue'
+
+// 模拟数据
+import xhqdData from '../data/charts/xhqd.json'
+import iperfData from '../data/charts/iperf.json'
+import yszkData from '../data/charts/yszk.json'
+import jzsjData from '../data/charts/jzsj.json'
 export default defineComponent({
     name: 'chart',
     components: {
@@ -118,6 +116,40 @@ export default defineComponent({
         mapShow
     },
     setup(props, { emit }) {
+
+        // 海洋通信实验室概述数据
+        const hytxsysgsData = [
+            {
+                text: '实验室总人数',
+                value: '24',
+                unit: '人'
+            },
+            {
+                text: '技术人员占比',
+                value: '50',
+                unit: '%'
+            },
+            {
+                text: '产品投资额',
+                value: '3000',
+                unit: '万元'
+            }
+        ]
+
+        const router = new useRouter()
+        // 跳转到后台管理系统
+        const goAdmin = () => {
+            router.push('/index')
+        }
+
+        return {
+            xhqdData,
+            iperfData,
+            yszkData,
+            jzsjData,
+            hytxsysgsData,
+            goAdmin
+        }
     }
 })
 </script>
@@ -133,6 +165,26 @@ export default defineComponent({
 
     .chart-header {
         // border: 1px solid green;
+        background: url('../assets/charts/bg-header.png') no-repeat;
+        background-size: 100% 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+
+        .title {
+            font-size: 2em;
+            color: #7ef2ff;
+            font-weight: 700;
+        }
+
+        .goAdmin {
+            position: absolute;
+            right: 20px;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
     }
 
     .chart-main {
@@ -140,10 +192,17 @@ export default defineComponent({
         width: 100%;
         height: calc(100% - 60px);
         padding: 5px;
+        padding-top: 0 !important;
     }
 
     .mat-col-item {
         // padding: 10px;
+    }
+
+    .number-container {
+        background-color: #0a1549;
+        background: url('../assets/charts/item.png') no-repeat;
+        background-size: 100% 100%;
     }
 
     .number-box {
@@ -158,6 +217,7 @@ export default defineComponent({
             justify-content: center;
             align-items: center;
             height: 30px;
+            color: #a8acbd;
         }
 
         div {
@@ -167,6 +227,7 @@ export default defineComponent({
             align-items: center;
             justify-content: center;
             font-size: 2em;
+            color: #fff27c;
         }
     }
 }

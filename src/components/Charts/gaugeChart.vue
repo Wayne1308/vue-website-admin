@@ -1,5 +1,5 @@
 <template>
-    <echart :option="lineChartOption"></echart>
+    <echart :option="chartData"></echart>
     <!-- <div id="charts-box"></div> -->
 </template>
 
@@ -23,97 +23,89 @@ export default defineComponent({
     },
     setup(props, { emit }) {
 
-        const lineChartOption = {
+        const chartData = {
             grid: {
                 show: false,
-                left: 10,
-                right: 10,
-                top: 10,
-                bottom: 10
+                // left: 10,
+                // right: 10,
+                // top: 10,
+                // bottom: 10
             },
             series: [
                 {
                 type: 'gauge',
-                startAngle: 180,
-                endAngle: 0,
+                startAngle: 200,
+                endAngle: -20,
                 min: 0,
-                max: 1,
-                splitNumber: 8,
+                max: 100,
+                radius: '60%',
+                splitNumber: 10,
                 axisLine: {
+                    show: true,
                     lineStyle: {
-                    width: 6,
-                    color: [
-                        [0.25, '#FF6E76'],
-                        [0.5, '#FDDD60'],
-                        [0.75, '#58D9F9'],
-                        [1, '#7CFFB2']
-                    ]
+                        width: 6,
+                        color: [
+                            [0.25, '#FF6E76'],
+                            [0.5, '#FDDD60'],
+                            [0.75, '#58D9F9'],
+                            [1, '#7CFFB2']
+                        ]
                     }
                 },
+                center: ['50%', '50%'],
                 pointer: {
-                    icon: 'path://M12.8,0.7l12,40.1H0.7L12.8,0.7z',
-                    length: '12%',
-                    width: 20,
-                    offsetCenter: [0, '-60%'],
+                    show: true,
                     itemStyle: {
-                    color: 'auto'
+                        color: 'auto'
                     }
                 },
                 axisTick: {
-                    length: 12,
+                    distance: -13,
+                    splitNumber: 5,
                     lineStyle: {
-                    color: 'auto',
-                    width: 2
+                    width: 2,
+                    color: '#0489a7'
                     }
                 },
                 splitLine: {
-                    length: 20,
+                    distance: -20,
+                    length: 8,
                     lineStyle: {
-                    color: 'auto',
-                    width: 5
+                        width: 2,
+                        color: '#0489a7'
                     }
                 },
                 axisLabel: {
-                    color: '#464646',
+                    color: '#0385a2',
                     fontSize: 10,
-                    distance: -40,
-                    formatter: function (value) {
-                    if (value === 0.875) {
-                        return 'A';
-                    } else if (value === 0.625) {
-                        return 'B';
-                    } else if (value === 0.375) {
-                        return 'C';
-                    } else if (value === 0.125) {
-                        return 'D';
-                    }
-                    return '';
-                    }
-                },
-                title: {
-                    offsetCenter: [0, '-20%'],
-                    fontSize: 10
+                    distance: -20
                 },
                 detail: {
-                    fontSize: 20,
-                    offsetCenter: [0, '0%'],
+                    fontSize: 16,
+                    offsetCenter: [0, '40%'],
                     valueAnimation: true,
                     formatter: function (value) {
-                    return Math.round(value * 100) + '分';
+                        return value + '℃';
                     },
                     color: 'auto'
                 },
                 data: [
                     {
-                    value: 1,
-                    name: 'Grade Rating'
+                        value: 40,
+                        name: '温度',
+                        title: {
+                            show: true,
+                            offsetCenter: [0, '75%'],
+                            color: '#2c88a5'
+                        }
                     }
                 ]
                 }
+                
             ]
         }
         return {
-            lineChartOption
+            chartData
         }
     }
 })

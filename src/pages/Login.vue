@@ -1,6 +1,7 @@
 <script>
 import utils from "../public/utils.js";
 import $ from "jquery";
+import { useRouter } from 'vue-router'
 
 export default {
   data() {
@@ -41,7 +42,7 @@ export default {
   mounted: function () {
     if (utils.islogined()) {
       //已登录，自动转到主页
-      this.$router.push("Index");
+      this.$router.push("Chart");
       return;
     }
     this.panelTop = ($(window).height() - this.loginPanelWidht) / 2 + "px";
@@ -63,6 +64,7 @@ export default {
         utils.hiddenloadding();
         if (res == "success") {
           that.$emit("logined", {}); //通知界面登录了
+          that.$router.push("Chart");
         }
       });
     },

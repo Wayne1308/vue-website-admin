@@ -24,62 +24,39 @@ export default defineComponent({
     setup(props, { emit }) {
 
         const lineChartOption = {
-            grid: {
+            legend: {
                 show: false,
-                left: 10,
-                right: 10,
-                top: 10,
-                bottom: 10
             },
             tooltip: {
-                trigger: 'item',
-                formatter: '{a} <br/>{b} : {c} ({d}%)'
-            },
-            legend: {
-                left: 'center',
-                top: 'bottom',
-                data: [
-                'rose1',
-                'rose2',
-                'rose3',
-                'rose4',
-                'rose5',
-                'rose6',
-                'rose7',
-                'rose8'
-                ]
+                show: true
             },
             series: [
                 {
-                    name: 'Radius Mode',
+                    name: '终端分布',
                     type: 'pie',
-                    radius: [10, 80],
+                    radius: [10, 70],
                     center: ['50%', '50%'],
-                    roseType: 'radius',
+                    roseType: 'area',
                     itemStyle: {
-                        borderRadius: 5
+                        borderRadius: 0
                     },
                     label: {
-                        show: false
+                        show: true,
+                        color: 'auto'
                     },
-                    emphasis: {
-                        label: {
-                        show: true
-                        }
-                    },
+                    labelLine: {},
                     data: [
-                        { value: 40, name: 'rose 1' },
-                        { value: 33, name: 'rose 2' },
-                        { value: 28, name: 'rose 3' },
-                        { value: 22, name: 'rose 4' },
-                        { value: 20, name: 'rose 5' },
-                        { value: 15, name: 'rose 6' },
-                        { value: 12, name: 'rose 7' },
-                        { value: 10, name: 'rose 8' }
+                        { value: 40, name: '湖南' },
+                        { value: 38, name: '河北' },
+                        { value: 32, name: '广东' },
+                        { value: 30, name: '四川' },
+                        { value: 28, name: '浙江' },
+                        { value: 26, name: '江苏' },
+                        { value: 22, name: '湖北' }
                     ]
                 }
-            ]
-        }
+                ]
+            }
         return {
             lineChartOption
         }
