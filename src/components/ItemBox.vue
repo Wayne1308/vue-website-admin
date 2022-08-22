@@ -1,5 +1,5 @@
 <template>
-    <div class="item-box-container">
+    <div class="item-box-container" ref="itemConRef">
         <div class="item-title">{{ title }}</div>
         <div class="item-content-container">
             <slot></slot>
@@ -8,11 +8,12 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
 import utils from "../public/utils.js";
 import api from "../public/api.js";
 import $ from 'jquery';
 import * as echarts from 'echarts'
+import { isNumber } from 'lodash';
 
 export default defineComponent({
     name: 'itemBox',
@@ -24,6 +25,18 @@ export default defineComponent({
         }
     },
     setup(props, { emit }) {
+
+        const itemConRef = ref(null);
+
+        let itemContentHeight = ref('0')
+        onMounted(() => {
+            itemContentHeight.value = Number(itemConRef.value.offsetHeight) - 20 + 'px'
+        })
+
+        return {
+            itemConRef,
+            itemContentHeight
+        }
     }
 })
 </script>
@@ -46,7 +59,8 @@ export default defineComponent({
 
     .item-content-container {
         width: 100%;
-        height: calc(100% - 20px);
+        // height: calc(100% - 20px);
+        height: v-bind(itemContentHeight);
     }
 }
 </style>

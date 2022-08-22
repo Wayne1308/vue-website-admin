@@ -83,6 +83,11 @@
 </script>
 
 <style>
+
+	* {
+		box-sizing: border-box;
+	}
+	
 	.page-layout .el-main {
 		padding-top: 10px !important;
 		padding-left: 10px !important;

@@ -3,7 +3,7 @@ import utils from "../public/utils.js";
 import MenuBar from "./Menu.vue";
 import UserInfo from "../pages/system/UserInfo.vue";
 import UserForm from "../pages/system/UserForm.vue";
-import ChangePwd from "./ChangePwd.vue";
+import ChangePwd from "./ChangePwd.vue"
 
 import {
   ArrowDown,
@@ -77,6 +77,20 @@ export default {
     },
   },
 };
+</script>
+
+<script setup>
+import { ArrowRight } from '@element-plus/icons-vue'
+import { computed } from 'vue';
+import { useStore } from 'vuex';
+const store = useStore()
+
+// 渲染面包屑导航
+const crumbsData = computed(() => {
+  console.log(store.state.selectMenuDeep);
+  return store.state.selectMenuDeep || []
+})
+
 </script>
 
 <template>
@@ -162,7 +176,17 @@ export default {
       <MenuBar></MenuBar>
     </el-aside>
     <el-main>
-      <router-view @logined="logined" :userinfo="userinfo" style=""></router-view>
+      <div class="main-container">
+        <div class="crumbs-nav">
+          <el-breadcrumb :separator-icon="ArrowRight">
+            <el-breadcrumb-item>系统</el-breadcrumb-item>
+            <el-breadcrumb-item v-for="(item, i) in crumbsData" :key="i" :to="{ path: '/Index' }">{{ item }}</el-breadcrumb-item>
+          </el-breadcrumb>
+        </div>
+        <div class="main-content">
+          <router-view @logined="logined" :userinfo="userinfo" style=""></router-view>
+        </div>
+      </div>
     </el-main>
   </el-container>
 
@@ -171,7 +195,7 @@ export default {
   <ChangePwd ref="pwd"></ChangePwd>
 </template>
 
-<style scoped="scoped">
+<style scoped="scoped" lang="less">
 .top_bar {
   background: #fff;
   height: 60px;
@@ -196,5 +220,17 @@ export default {
 
 .top_btn:hover {
   color: #409eff;
+}
+
+.main-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+
+  .crumbs-nav {
+    margin-bottom: 20px;
+  }
 }
 </style>

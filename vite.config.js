@@ -10,7 +10,8 @@ function _resolve(dir) {
 export default defineConfig({
   plugins: [vue()],
   server: {                // ← ← ← ← ← ←
-    host: '0.0.0.0'    // ← 新增内容 ←
+    host: '0.0.0.0',    // ← 新增内容 ←
+    port: '8888'
   },
   resolve: {
     // 别名

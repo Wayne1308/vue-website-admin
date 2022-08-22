@@ -3,6 +3,7 @@ import {
 } from "vue"
 import App from "./App.vue"
 import router from './router/index'
+import store from './store/index'
 import ElementPlus from "element-plus"
 import "element-plus/dist/index.css"
 import zhCn from "element-plus/es/locale/lang/zh-cn"
@@ -25,7 +26,7 @@ for (const name in ElIcons) {
 }
 
 // 引入路由管理
-app.use(router);
+app.use(router).use(store);
 
 // 引入elementplus
 app.use(ElementPlus, {

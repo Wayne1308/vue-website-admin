@@ -73,6 +73,8 @@ import {
   SetUp,
 } from "@element-plus/icons-vue";
 
+import { useStore } from "vuex";
+
 export default {
   components: {
     House,
@@ -100,6 +102,7 @@ export default {
   },
   mounted: function () {
     var that = this;
+    const store = useStore()
     this.loadData(function (res) {
       if (!res || res.status != 200) {
         utils.showerror("加载失败");
@@ -110,16 +113,21 @@ export default {
       that.datas = res.data;
       //获取当前url中的地址，并自动选中对应菜单
       var curpath = that.$route.name;
+      let selectMenuDeep  = [];
       that.datas.forEach(function (item, index) {
         if (item.name == curpath) {
           that.selectmenu = item.id;
+          selectMenuDeep = [item.name]
         }
         for (var i = 0; i < item.childrens.length; i++) {
           if (item.childrens[i].name == curpath) {
             that.selectmenu = item.childrens[i].id;
+            selectMenuDeep = [item.name, item.childrens[i].name]
           }
         }
       });
+      store.commit('setSelectMenuDeep', selectMenuDeep)
+
     });
   },
   methods: {

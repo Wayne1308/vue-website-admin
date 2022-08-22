@@ -2,7 +2,7 @@ import axios from 'axios';
 import utils from './utils';
 const config = {
 	// baseURL: process.env.baseURL
-	baseURL: 'http://localhost:3000/',
+	baseURL: 'http://localhost:8888/',
 	timeout: 1000,
 	headers: {
 		'Content-Type': 'application/json',

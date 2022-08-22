@@ -64,7 +64,9 @@
                                     </item-box>
                                 </mat-col>
                                 <mat-col gutter="5">
-                                    <item-box title="实验室介绍"></item-box>
+                                    <item-box style="max-height: 200px" title="实验室介绍">
+                                        <rolling-introduction></rolling-introduction>
+                                    </item-box>
                                 </mat-col>
                             </mat-row>
                         </mat-col>
@@ -98,6 +100,7 @@ import lineChart from '../components/Charts/lineChart.vue';
 import gaugeChart from '../components/Charts/gaugeChart.vue';
 import rouseChart from '../components/Charts/rouseChart.vue';
 import mapShow from '../components/Charts/map.vue'
+import rollingIntroduction from '../components/RollingIntroduction.vue';
 
 // 模拟数据
 import xhqdData from '../data/charts/xhqd.json'
@@ -113,7 +116,8 @@ export default defineComponent({
         lineChart,
         gaugeChart,
         rouseChart,
-        mapShow
+        mapShow,
+        rollingIntroduction
     },
     setup(props, { emit }) {
 
