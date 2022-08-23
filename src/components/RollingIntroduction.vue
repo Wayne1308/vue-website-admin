@@ -22,11 +22,11 @@ const props = defineProps({
       return [
         {
           title: '简介',
-          content: `简介content`
+          content: `简介content简介content简介content简介content简介content简介content简介content简介content`
         },
         {
           title: '研究方向',
-          content: `研究方向content`
+          content: `研究方向content研究方向content研究方向content研究方向content研究方向content`
         },
         {
           title: '实际应用',
@@ -79,7 +79,7 @@ const selectMenu = (e) => {
 
     .rolling-menu {
       box-sizing: border-box;
-      width: 20%;
+      width: 30%;
       height: 100%;
       display: inline-block;
       margin: 0;
@@ -94,7 +94,7 @@ const selectMenu = (e) => {
       // border: 1px solid red;
 
       .menu-item {
-        height: 80px;
+        height: 4em;
         width: 100%;
         display: flex;
         align-items: center;
@@ -138,7 +138,7 @@ const selectMenu = (e) => {
 
     }
     .introduction-content {
-      width: 80%;
+      width: 70%;
       height: 100%;
       display: inline-block;
       position: relative;
