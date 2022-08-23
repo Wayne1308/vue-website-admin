@@ -160,7 +160,7 @@ export default {
                 <el-radio label="关闭" />
               </el-radio-group>
             </el-form-item>
-            <el-form-item>
+            <el-form-item style="margin-bottom: 100px;">
               <el-button type="primary" @click="submitAdd">立即提交</el-button>
               <el-button @click="resetForm">重置</el-button>
             </el-form-item>

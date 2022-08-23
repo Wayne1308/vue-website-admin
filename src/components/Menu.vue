@@ -8,11 +8,10 @@
     @open="handleOpen"
     @close="handleClose"
     mode="vertical"
-    :default-active="selectmenu"
+    :default-active="0"
     menu-trigger="click"
     router="true"
-    :collapse-transition="collapseTransition"
-    collapse="true"
+    unique-opened="true"
     style="width: 100%"
   >
     <div v-for="(item, index) in datas" :key="item.id">
@@ -102,7 +101,6 @@ export default {
   },
   mounted: function () {
     var that = this;
-    const store = useStore()
     this.loadData(function (res) {
       if (!res || res.status != 200) {
         utils.showerror("加载失败");
@@ -113,20 +111,16 @@ export default {
       that.datas = res.data;
       //获取当前url中的地址，并自动选中对应菜单
       var curpath = that.$route.name;
-      let selectMenuDeep  = [];
       that.datas.forEach(function (item, index) {
         if (item.name == curpath) {
           that.selectmenu = item.id;
-          selectMenuDeep = [item.name]
         }
         for (var i = 0; i < item.childrens.length; i++) {
           if (item.childrens[i].name == curpath) {
             that.selectmenu = item.childrens[i].id;
-            selectMenuDeep = [item.name, item.childrens[i].name]
           }
         }
       });
-      store.commit('setSelectMenuDeep', selectMenuDeep)
 
     });
   },
@@ -144,10 +138,9 @@ export default {
 </script>
 <style>
 .menubar {
-  height: 1000px;
-  line-height: 60px !important;
+  height: 100vh;
 }
-.el-menu--horizontal {
+/* .el-menu--horizontal {
   border-bottom: none !important;
 }
 .el-menu-item-group {
@@ -173,6 +166,6 @@ export default {
 .el-menu--horizontal .el-menu-item:not(.is-disabled):focus,
 .el-menu--horizontal .el-menu-item:not(.is-disabled):hover {
   color: #409eff !important;
-}
+} */
 </style>
 

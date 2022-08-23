@@ -34,7 +34,7 @@ export default [{
 },
 {
 	path: "/Index",
-	name: "主页",
+	name: "首页",
 	component: Index
 },
 {
@@ -109,7 +109,7 @@ export default [{
 },
 {
 	path: "/NineShaft",
-	name: "九轴",
+	name: "九轴模块",
 	component: NineShaft
 },
 {

@@ -1,5 +1,6 @@
 <script>
 import utils from "../public/utils.js";
+import api from "../public/api.js";
 import MenuBar from "./Menu.vue";
 import UserInfo from "../pages/system/UserInfo.vue";
 import UserForm from "../pages/system/UserForm.vue";
@@ -20,6 +21,8 @@ export default {
     return {
       dicts: [],
       islogin: utils.islogined(),
+      crumbsData: [],
+      drawerMenu: false
     };
   },
   components: {
@@ -33,6 +36,14 @@ export default {
     UserInfo,
     UserForm,
     ChangePwd,
+  },
+  mounted() {
+  },
+  watch: {
+    $route: async function (newV) {
+      this.crumbsData = await this.getCrumbsData(newV.name);
+      console.log('crumbsData', this.crumbsData);
+    }
   },
   methods: {
     /**
@@ -75,22 +86,38 @@ export default {
         this.$refs.pwd.show();
       }
     },
+    getCrumbsData: function(curpath) {
+      const that = this;
+      return new Promise((resolve, reject) => {
+        api.loadMenu(function(res) {
+          if (!res || res.status != 200) {
+          return utils.showerror("加载失败");
+          }
+          if (!res.data) {
+            return utils.showerror("数据为空");
+          }
+          let selectMenuDeep = []
+          res.data.forEach(function (item, index) {
+            if (item.name == curpath) {
+              that.selectmenu = item.id;
+              selectMenuDeep = [item.name]
+            }
+            for (var i = 0; i < item.childrens.length; i++) {
+              if (item.childrens[i].name == curpath) {
+                that.selectmenu = item.childrens[i].id;
+                selectMenuDeep = [item.name, item.childrens[i].name]
+              }
+            }
+          });
+          resolve(selectMenuDeep)
+        });
+      })
+    },
+    clickMenuExpand: function() {
+      this.drawerMenu = !this.drawerMenu
+    }
   },
 };
-</script>
-
-<script setup>
-import { ArrowRight } from '@element-plus/icons-vue'
-import { computed } from 'vue';
-import { useStore } from 'vuex';
-const store = useStore()
-
-// 渲染面包屑导航
-const crumbsData = computed(() => {
-  console.log(store.state.selectMenuDeep);
-  return store.state.selectMenuDeep || []
-})
-
 </script>
 
 <template>
@@ -98,7 +125,30 @@ const crumbsData = computed(() => {
     <el-header
       ><el-row>
         <el-col :span="19">
+        <div class="logo-container">
+          <div class="menubar Narrower" v-if="islogin">
+            <el-icon :size="20" @click="clickMenuExpand"><Expand /></el-icon>
+          </div>
           <div
+            style="
+              background: #000;
+              color: #fff;
+              font-size: 20px;
+              text-align: center;
+              height: 60px;
+              line-height: 60px;
+              letter-spacing: 3px;
+              background-image: -webkit-linear-gradient(right, #9c27b0, #3a8ee6, #ff5722);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              font-weight: bold;
+            "
+          >
+              定制版
+          </div>
+        </div>
+        <div
+            class="logo-title widerScreen"
             style="
               width: 250px;
               background: #000;
@@ -124,7 +174,7 @@ const crumbsData = computed(() => {
                 <el-icon :size="14">
                   <Search />
                 </el-icon>
-                <span class="">搜索</span>
+                <span class="searchText">搜索</span>
               </div>
             </el-col>
             <el-col :span="6">
@@ -132,16 +182,16 @@ const crumbsData = computed(() => {
                 <el-icon :size="14">
                   <QuestionFilled />
                 </el-icon>
-                <span>帮助</span>
+                <span class="helpText">帮助</span>
               </div>
             </el-col>
             <el-col :span="7">
-              <el-dropdown @command="handleCommand">
+              <el-dropdown @command="handleCommand" style="height: 60px">
                 <div class="top_btn">
                   <el-icon :size="14">
                     <UserFilled />
                   </el-icon>
-                  <span>{{ userinfo ? userinfo.name : "未知" }}</span>
+                  <span class="userInfoText">{{ userinfo ? userinfo.name : "未知" }}</span>
                   <el-icon class="el-icon--right">
                     <ArrowDown></ArrowDown>
                   </el-icon>
@@ -163,7 +213,7 @@ const crumbsData = computed(() => {
                 <el-icon :size="14">
                   <SwitchButton />
                 </el-icon>
-                <span>退出</span>
+                <span class="logoutText">退出</span>
               </div>
             </el-col>
           </el-row>
@@ -172,14 +222,14 @@ const crumbsData = computed(() => {
     >
   </el-container>
   <el-container>
-    <el-aside width="250px" class="menubar" v-if="islogin">
+    <el-aside width="250px" class="menubar widerScreen" v-if="islogin">
       <MenuBar></MenuBar>
     </el-aside>
     <el-main>
       <div class="main-container">
         <div class="crumbs-nav">
           <el-breadcrumb :separator-icon="ArrowRight">
-            <el-breadcrumb-item>系统</el-breadcrumb-item>
+            <el-breadcrumb-item :to="{ path: '/chart' }">系统</el-breadcrumb-item>
             <el-breadcrumb-item v-for="(item, i) in crumbsData" :key="i" :to="{ path: '/Index' }">{{ item }}</el-breadcrumb-item>
           </el-breadcrumb>
         </div>
@@ -193,6 +243,16 @@ const crumbsData = computed(() => {
   <UserForm ref="form" :userinfo="userinfo" @addsuccess="addsuccess"></UserForm>
   <UserInfo ref="info" @edit="toform" :dicts="dicts"></UserInfo>
   <ChangePwd ref="pwd"></ChangePwd>
+
+  <el-drawer
+    v-model="drawerMenu"
+    :with-header="false"
+    direction="ltr"
+    custom-class="drawClass"
+    :before-close="handleClose"
+  >
+    <MenuBar></MenuBar>
+  </el-drawer>
 </template>
 
 <style scoped="scoped" lang="less">
@@ -231,6 +291,53 @@ const crumbsData = computed(() => {
 
   .crumbs-nav {
     margin-bottom: 20px;
+  }
+}
+
+/* 在宽度为 600 像素或更小的屏幕上 */
+@media screen and (max-width: 600px) {
+  .menubar.widerScreen, .logo-title.widerScreen {
+    display: none;
+  }
+  .menubar.Narrower {
+
+  }
+
+  .logo-container {
+    height: 60px;
+    display: flex;
+    align-items: center;
+
+    .menubar.Narrower {
+      height: 60px;
+      width: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
+/* 在宽度为 600 像素或更小的屏幕上 */
+@media screen and (min-width: 600px) {
+  .logo-container {
+    display: none;
+  }
+}
+</style>
+
+<style lang="less">
+/* 在宽度为 600 像素或更小的屏幕上 */
+@media screen and (max-width: 600px) {
+  .drawClass {
+    width: 250px!important;
+  }
+  .el-drawer__body {
+    padding: 0!important;
+  }
+
+  .searchText, .helpText, .logoutText, .userInfoText {
+    display: none;
   }
 }
 </style>

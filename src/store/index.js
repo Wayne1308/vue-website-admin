@@ -3,8 +3,8 @@ import { createStore } from "vuex";
 const store = createStore({
   state () {
     return {
-      // 选择菜单 以数组形式存储 位置代表层级
-      selectMenuDeep: []
+      // 选择菜单 以对象形式存储
+      selectMenuDeep: {}
     }
   },
   mutations: {
