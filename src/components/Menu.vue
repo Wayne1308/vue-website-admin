@@ -1,4 +1,8 @@
 <template>
+  <div class="logo-container">
+    <img src="../assets/logo.png" alt="logo">
+    <span class="logo-text">定制版</span>
+  </div>
   <!-- 左侧菜单栏 -->
   <el-menu
     class="menubar"
@@ -136,36 +140,88 @@ export default {
   },
 };
 </script>
-<style>
-.menubar {
+
+<style lang="less" scoped>
+.logo-container {
+  width: 100%;
+  height: 60px;
+  background-color: #1b8ffe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    margin-right: 20px;
+  }
+
+  .logo-text {
+    background: #000;
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
+    height: 60px;
+    line-height: 60px;
+    letter-spacing: 3px;
+    background-image: -webkit-linear-gradient(right, #9c27b0, #ff5722);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+  }
+}
+
+</style>
+<style lang="less">
+@hover-bg-color: #e6f7ff!important;
+@color: #666666!important;
+@active-bg-color: #e6f7ff!important;
+
+.menubar.el-menu {
   height: 100vh;
+  background-color: #FFFFFF!important;
+  font-weight: 600;
+
+  .el-menu-item {
+    color: @color;
+
+    &:hover {
+      background-color: @hover-bg-color;
+    }
+
+    &.is-active {
+      background-color: @active-bg-color;
+      border-right: 3px solid #3787c7;
+    }
+  }
+
+  .el-sub-menu {
+
+    &.is-active.is-opened {
+
+      .el-sub-menu__title {
+        color: #3787c6!important;
+      }
+
+      // .el-menu-item-group {
+      //   background-color: @active-bg-color;
+      // }
+
+    }
+
+    .el-sub-menu__title:hover {
+      background-color: @hover-bg-color;
+    }
+
+    &:hover {
+      background-color: @hover-bg-color;
+    }
+    
+  }
+
+  .el-sub-menu__title, .el-menu-item-group {
+    color: @color;
+    background-color: #FFFFFF!important;
+  }
 }
-/* .el-menu--horizontal {
-  border-bottom: none !important;
-}
-.el-menu-item-group {
-  height: 56px !important;
-  line-height: 56px !important;
-}
-.el-menu-item {
-  height: 60px !important;
-  line-height: 60px !important;
-}
-.el-menu-item-group .el-menu-item {
-  height: 36px !important;
-  line-height: 36px !important;
-}
-.el-sub-menu {
-  height: 60px !important;
-  line-height: 60px !important;
-}
-.el-sub-menu__title {
-  height: 60px !important;
-  line-height: 60px !important;
-}
-.el-menu--horizontal .el-menu-item:not(.is-disabled):focus,
-.el-menu--horizontal .el-menu-item:not(.is-disabled):hover {
-  color: #409eff !important;
-} */
+
 </style>
 

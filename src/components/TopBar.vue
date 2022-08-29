@@ -1,3 +1,142 @@
+<template>
+  <el-container>
+    <!-- 侧边栏 -->
+    <el-aside width="200px" class="menubar widerScreen" v-if="islogin">
+      <MenuBar></MenuBar>
+    </el-aside>
+    <!-- 头部 + 主体 -->
+    <el-container>
+      <!-- 头部 -->
+      <el-header class="top_bar">
+        <el-row>
+          <el-col :span="19">
+            <div class="logo-container">
+              <div class="menubar Narrower" v-if="islogin">
+                <el-icon :size="20" @click="clickMenuExpand"><Expand /></el-icon>
+              </div>
+              
+              <div
+                  style="
+              background: #000;
+              color: #fff;
+              font-size: 20px;
+              text-align: center;
+              height: 60px;
+              line-height: 60px;
+              letter-spacing: 3px;
+              background-image: -webkit-linear-gradient(right, #9c27b0, #3a8ee6, #ff5722);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              font-weight: bold;
+            "
+              >
+                定制版
+              </div>
+            </div>
+            <div
+                class="logo-title widerScreen"
+                style="
+              width: 250px;
+              background: #000;
+              color: #fff;
+              font-size: 20px;
+              text-align: center;
+              height: 60px;
+              line-height: 60px;
+              letter-spacing: 3px;
+              background-image: -webkit-linear-gradient(right, #9c27b0, #3a8ee6, #ff5722);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              font-weight: bold;
+            "
+            >
+              定制版
+            </div>
+          </el-col>
+          <el-col :span="5">
+            <el-row>
+              <el-col :span="5">
+                <div class="top_btn" @click="search">
+                  <el-icon :size="14">
+                    <Search />
+                  </el-icon>
+                  <span class="searchText">搜索</span>
+                </div>
+              </el-col>
+              <el-col :span="6">
+                <div class="top_btn" @click="help">
+                  <el-icon :size="14">
+                    <QuestionFilled />
+                  </el-icon>
+                  <span class="helpText">帮助</span>
+                </div>
+              </el-col>
+              <el-col :span="7">
+                <el-dropdown @command="handleCommand" style="height: 60px">
+                  <div class="top_btn">
+                    <el-icon :size="14">
+                      <UserFilled />
+                    </el-icon>
+                    <span class="userInfoText">{{ userinfo ? userinfo.name : "未知" }}</span>
+                    <el-icon class="el-icon--right">
+                      <ArrowDown></ArrowDown>
+                    </el-icon>
+                  </div>
+                  <template #dropdown>
+                    <el-dropdown-menu>
+                      <el-dropdown-item command="userinfo" :icon="User"
+                      >个人信息</el-dropdown-item
+                      >
+                      <el-dropdown-item command="changepwd" :icon="User"
+                      >修改密码</el-dropdown-item
+                      >
+                    </el-dropdown-menu>
+                  </template>
+                </el-dropdown>
+              </el-col>
+              <el-col :span="6">
+                <div class="top_btn" @click="logout">
+                  <el-icon :size="14">
+                    <SwitchButton />
+                  </el-icon>
+                  <span class="logoutText">退出</span>
+                </div>
+              </el-col>
+            </el-row>
+          </el-col>
+        </el-row>
+      </el-header>
+      <!-- 主体 -->
+      <el-main>
+        <div class="main-container">
+          <div class="crumbs-nav">
+            <el-breadcrumb :separator-icon="ArrowRight">
+              <el-breadcrumb-item :to="{ path: '/chart' }">系统</el-breadcrumb-item>
+              <el-breadcrumb-item v-for="(item, i) in crumbsData" :key="i" :to="{ path: '/Index' }">{{ item }}</el-breadcrumb-item>
+            </el-breadcrumb>
+          </div>
+          <div class="main-content">
+            <router-view @logined="logined" :userinfo="userinfo" style=""></router-view>
+          </div>
+        </div>
+      </el-main>
+    </el-container>
+  </el-container>
+  <UserForm ref="form" :userinfo="userinfo" @addsuccess="addsuccess"></UserForm>
+  <UserInfo ref="info" @edit="toform" :dicts="dicts"></UserInfo>
+  <ChangePwd ref="pwd"></ChangePwd>
+
+  <el-drawer
+      v-model="drawerMenu"
+      :with-header="false"
+      direction="ltr"
+      custom-class="drawClass"
+      :before-close="handleClose"
+  >
+    <MenuBar></MenuBar>
+  </el-drawer>
+</template>
+
 <script>
 import utils from "../public/utils.js";
 import api from "../public/api.js";
@@ -120,146 +259,11 @@ export default {
 };
 </script>
 
-<template>
-  <el-container class="container top_bar">
-    <el-header
-      ><el-row>
-        <el-col :span="19">
-        <div class="logo-container">
-          <div class="menubar Narrower" v-if="islogin">
-            <el-icon :size="20" @click="clickMenuExpand"><Expand /></el-icon>
-          </div>
-          <div
-            style="
-              background: #000;
-              color: #fff;
-              font-size: 20px;
-              text-align: center;
-              height: 60px;
-              line-height: 60px;
-              letter-spacing: 3px;
-              background-image: -webkit-linear-gradient(right, #9c27b0, #3a8ee6, #ff5722);
-              -webkit-background-clip: text;
-              -webkit-text-fill-color: transparent;
-              font-weight: bold;
-            "
-          >
-              定制版
-          </div>
-        </div>
-        <div
-            class="logo-title widerScreen"
-            style="
-              width: 250px;
-              background: #000;
-              color: #fff;
-              font-size: 20px;
-              text-align: center;
-              height: 60px;
-              line-height: 60px;
-              letter-spacing: 3px;
-              background-image: -webkit-linear-gradient(right, #9c27b0, #3a8ee6, #ff5722);
-              -webkit-background-clip: text;
-              -webkit-text-fill-color: transparent;
-              font-weight: bold;
-            "
-          >
-              定制版
-          </div>
-        </el-col>
-        <el-col :span="5">
-          <el-row>
-            <el-col :span="5">
-              <div class="top_btn" @click="search">
-                <el-icon :size="14">
-                  <Search />
-                </el-icon>
-                <span class="searchText">搜索</span>
-              </div>
-            </el-col>
-            <el-col :span="6">
-              <div class="top_btn" @click="help">
-                <el-icon :size="14">
-                  <QuestionFilled />
-                </el-icon>
-                <span class="helpText">帮助</span>
-              </div>
-            </el-col>
-            <el-col :span="7">
-              <el-dropdown @command="handleCommand" style="height: 60px">
-                <div class="top_btn">
-                  <el-icon :size="14">
-                    <UserFilled />
-                  </el-icon>
-                  <span class="userInfoText">{{ userinfo ? userinfo.name : "未知" }}</span>
-                  <el-icon class="el-icon--right">
-                    <ArrowDown></ArrowDown>
-                  </el-icon>
-                </div>
-                <template #dropdown>
-                  <el-dropdown-menu>
-                    <el-dropdown-item command="userinfo" :icon="User"
-                      >个人信息</el-dropdown-item
-                    >
-                    <el-dropdown-item command="changepwd" :icon="User"
-                      >修改密码</el-dropdown-item
-                    >
-                  </el-dropdown-menu>
-                </template>
-              </el-dropdown>
-            </el-col>
-            <el-col :span="6">
-              <div class="top_btn" @click="logout">
-                <el-icon :size="14">
-                  <SwitchButton />
-                </el-icon>
-                <span class="logoutText">退出</span>
-              </div>
-            </el-col>
-          </el-row>
-        </el-col>
-      </el-row></el-header
-    >
-  </el-container>
-  <el-container>
-    <el-aside width="250px" class="menubar widerScreen" v-if="islogin">
-      <MenuBar></MenuBar>
-    </el-aside>
-    <el-main>
-      <div class="main-container">
-        <div class="crumbs-nav">
-          <el-breadcrumb :separator-icon="ArrowRight">
-            <el-breadcrumb-item :to="{ path: '/chart' }">系统</el-breadcrumb-item>
-            <el-breadcrumb-item v-for="(item, i) in crumbsData" :key="i" :to="{ path: '/Index' }">{{ item }}</el-breadcrumb-item>
-          </el-breadcrumb>
-        </div>
-        <div class="main-content">
-          <router-view @logined="logined" :userinfo="userinfo" style=""></router-view>
-        </div>
-      </div>
-    </el-main>
-  </el-container>
-
-  <UserForm ref="form" :userinfo="userinfo" @addsuccess="addsuccess"></UserForm>
-  <UserInfo ref="info" @edit="toform" :dicts="dicts"></UserInfo>
-  <ChangePwd ref="pwd"></ChangePwd>
-
-  <el-drawer
-    v-model="drawerMenu"
-    :with-header="false"
-    direction="ltr"
-    custom-class="drawClass"
-    :before-close="handleClose"
-  >
-    <MenuBar></MenuBar>
-  </el-drawer>
-</template>
-
 <style scoped="scoped" lang="less">
 .top_bar {
   background: #fff;
   height: 60px;
-  color: #000;
+  color: #8b8b8b;
 }
 
 .top_btn {

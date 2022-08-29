@@ -86,6 +86,7 @@
 
 	* {
 		box-sizing: border-box;
+		font-size: 12px;
 	}
 	
 	.page-layout .el-main {
