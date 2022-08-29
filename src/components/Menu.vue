@@ -103,6 +103,8 @@ export default {
       collapseTransition: false,
     };
   },
+  computed: {
+  },
   mounted: function () {
     var that = this;
     this.loadData(function (res) {

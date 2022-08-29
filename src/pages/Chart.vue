@@ -143,7 +143,7 @@ export default defineComponent({
         const router = new useRouter()
         // 跳转到后台管理系统
         const goAdmin = () => {
-            router.push('/index')
+            router.push('/Login')
         }
 
         return {

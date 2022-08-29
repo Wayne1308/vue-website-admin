@@ -30,7 +30,7 @@ import Chart from '../pages/Chart.vue'
 // 定义页面路由
 export default [{
 	path: "/",
-	redirect: "/Login"
+	redirect: "/Chart"
 },
 {
 	path: "/Index",

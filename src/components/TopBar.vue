@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <!-- 侧边栏 -->
-    <el-aside width="200px" class="menubar widerScreen" v-if="islogin">
+    <el-aside ref="menuContainer" :style="{transform: 'translateX(' + menuTrans + ')', width: menuWidth}" class="menubar widerScreen showMenu" v-if="islogin">
       <MenuBar></MenuBar>
     </el-aside>
     <!-- 头部 + 主体 -->
@@ -14,7 +14,6 @@
               <div class="menubar Narrower" v-if="islogin">
                 <el-icon :size="20" @click="clickMenuExpand"><Expand /></el-icon>
               </div>
-              
               <div
                   style="
               background: #000;
@@ -33,24 +32,30 @@
                 定制版
               </div>
             </div>
-            <div
-                class="logo-title widerScreen"
-                style="
-              width: 250px;
-              background: #000;
-              color: #fff;
-              font-size: 20px;
-              text-align: center;
-              height: 60px;
-              line-height: 60px;
-              letter-spacing: 3px;
-              background-image: -webkit-linear-gradient(right, #9c27b0, #3a8ee6, #ff5722);
-              -webkit-background-clip: text;
-              -webkit-text-fill-color: transparent;
-              font-weight: bold;
-            "
-            >
-              定制版
+            <div class='header-left-container'>
+              <el-icon :size="100" @click="controlMenu"><Expand /></el-icon>
+              <div class="tip-box">
+                <div class="tip-box-item">
+                  <img src="../assets/header/cpu.png" alt="" srcset="">
+                  <span>5%</span>
+                </div>
+                <div class="tip-box-item">
+                  <img src="../assets/header/cpu.png" alt="" srcset="">
+                  <span>8%</span>
+                </div>
+                <div class="tip-box-item">
+                  <img src="../assets/header/cpu.png" alt="" srcset="">
+                  <span>95.00B/s</span>
+                </div>
+                <div class="tip-box-item">
+                  <img src="../assets/header/cpu.png" alt="" srcset="">
+                  <span>134.00B/s</span>
+                </div>
+                <div class="tip-box-item">
+                  <img src="../assets/header/cpu.png" alt="" srcset="">
+                  <span>1</span>
+                </div>
+              </div>
             </div>
           </el-col>
           <el-col :span="5">
@@ -161,7 +166,9 @@ export default {
       dicts: [],
       islogin: utils.islogined(),
       crumbsData: [],
-      drawerMenu: false
+      drawerMenu: false,
+      menuTrans: 0,
+      menuWidth: '200px'
     };
   },
   components: {
@@ -254,6 +261,10 @@ export default {
     },
     clickMenuExpand: function() {
       this.drawerMenu = !this.drawerMenu
+    },
+    controlMenu: function() {
+      this.menuTrans = this.menuTrans === 0 ? -200 + 'px' : 0;
+      this.menuWidth = this.menuWidth === '200px' ? 0 : '200px';
     }
   },
 };
@@ -286,6 +297,45 @@ export default {
   color: #409eff;
 }
 
+.header-left-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+  .el-icon {
+    height: 20px;
+    width: 20px;
+    margin: 0 10px;
+    cursor: pointer;
+
+    svg {
+      height: 20px;
+      width: 20px;
+
+    }
+  }
+
+  .tip-box {
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+    .tip-box-item {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      margin: 0 5px;
+
+      img {
+        height: 1.25em;
+        width: 1.25em;
+        margin-right: 2px;
+      }
+    }
+  }
+}
+
 .main-container {
   width: 100%;
   height: 100%;
@@ -296,6 +346,12 @@ export default {
   .crumbs-nav {
     margin-bottom: 20px;
   }
+}
+
+.showMenu {
+  transform: translateX(0);
+
+  transition: 0.5s all;
 }
 
 /* 在宽度为 600 像素或更小的屏幕上 */
