@@ -259,89 +259,91 @@ export default {
 };
 </script>
 
-<style scoped="scoped" lang="less">
-.top_bar {
-  background: #fff;
-  height: 60px;
-  color: #8b8b8b;
-}
-
-.top_btn {
-  cursor: pointer;
-  line-height: 60px;
-  text-align: center;
-  color: #000;
-}
-
-.top_btn i {
-  position: relative;
-  top: 2px;
-}
-
-.top_btn span {
-  margin-left: 10px;
-}
-
-.top_btn:hover {
-  color: #409eff;
-}
-
-.main-container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-
-  .crumbs-nav {
-    margin-bottom: 20px;
-  }
-}
-
-/* 在宽度为 600 像素或更小的屏幕上 */
-@media screen and (max-width: 600px) {
-  .menubar.widerScreen, .logo-title.widerScreen {
-    display: none;
-  }
-  .menubar.Narrower {
-
-  }
-
-  .logo-container {
+<style scoped lang="less">
+  .top_bar {
+    background: #fff;
     height: 60px;
-    display: flex;
-    align-items: center;
+    color: #8b8b8b;
+  }
 
-    .menubar.Narrower {
-      height: 60px;
-      width: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+  .top_btn {
+    cursor: pointer;
+    line-height: 60px;
+    text-align: center;
+    color: #000;
+  }
+
+  .top_btn i {
+    position: relative;
+    top: 2px;
+  }
+
+  .top_btn span {
+    margin-left: 10px;
+  }
+
+  .top_btn:hover {
+    color: #409eff;
+  }
+
+  .main-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+
+    .crumbs-nav {
+      margin-bottom: 20px;
     }
   }
-}
 
-/* 在宽度为 600 像素或更小的屏幕上 */
-@media screen and (min-width: 600px) {
-  .logo-container {
-    display: none;
+  .el-main {
+    background-color: #f1f2f6;
   }
-}
 </style>
 
-<style lang="less">
-/* 在宽度为 600 像素或更小的屏幕上 */
-@media screen and (max-width: 600px) {
-  .drawClass {
-    width: 250px!important;
-  }
-  .el-drawer__body {
-    padding: 0!important;
-  }
 
-  .searchText, .helpText, .logoutText, .userInfoText {
-    display: none;
+<!-- 多端适配 -->
+<style lang="less">
+  /* 在宽度为 600 像素或更大的屏幕上 */
+  @media screen and (min-width: 600px) {
+    .logo-container {
+      display: none;
+    }
   }
-}
+  /* 在宽度为 600 像素或更小的屏幕上 */
+  @media screen and (max-width: 600px) {
+    .drawClass {
+      width: 250px!important;
+    }
+    .el-drawer__body {
+      padding: 0!important;
+    }
+
+    .searchText, .helpText, .logoutText, .userInfoText {
+      display: none;
+    }
+
+    .menubar.widerScreen, .logo-title.widerScreen {
+      display: none;
+    }
+    .menubar.Narrower {
+
+    }
+
+    .logo-container {
+      height: 60px;
+      display: flex;
+      align-items: center;
+
+      .menubar.Narrower {
+        height: 60px;
+        width: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
 </style>
