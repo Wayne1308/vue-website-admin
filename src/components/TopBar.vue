@@ -312,6 +312,50 @@ export default {
   .el-main {
     background-color: #f1f2f6;
   }
+
+  .header-left-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    .el-icon {
+      height: 20px;
+      width: 20px;
+      margin: 0 10px;
+      cursor: pointer;
+
+      svg {
+        height: 20px;
+        width: 20px;
+
+      }
+    }
+
+    .tip-box {
+      height: 100%;
+      display: flex;
+      align-items: center;
+
+      .tip-box-item {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        margin: 0 5px;
+
+        img {
+          height: 1.25em;
+          width: 1.25em;
+          margin-right: 2px;
+        }
+      }
+    }
+  }
+  .showMenu {
+    transform: translateX(0);
+
+    transition: 0.5s all;
+  }
 </style>
 
 
