@@ -126,14 +126,18 @@
       </el-col>
     </el-row>
 
-    <el-row justify="space-around" style="height: 300px">
+    <el-row justify="space-around" style="height: 500px">
       <el-col :span="24">
         <el-card class="box-card">
 					<el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
-						<el-tab-pane label="User" name="first">User</el-tab-pane>
-						<el-tab-pane label="Config" name="second">Config</el-tab-pane>
-						<el-tab-pane label="Role" name="third">Role</el-tab-pane>
-						<el-tab-pane label="Task" name="fourth">Task</el-tab-pane>
+						<el-tab-pane label="物理接口" name="first">
+							<el-scrollbar :height="500">
+								<interTable></interTable>
+							</el-scrollbar>
+						</el-tab-pane>
+						<el-tab-pane label="虚拟接口" name="second">
+							22222
+						</el-tab-pane>
 					</el-tabs>
 				</el-card>
       </el-col>
@@ -158,6 +162,7 @@
   import barChart from "../components/Charts/barChart.vue";
 	import ringChart from "../components/Charts/ringChart.vue";
 	import lljkChart from "../components/Charts/lljkChart.vue";
+	import interTable from '../components/interTable.vue'
 
 	export default {
 		components: {
@@ -168,7 +173,8 @@
 			Document,
       barChart,
 			ringChart,
-			lljkChart
+			lljkChart,
+			interTable
 		},
 		data() {
 			return {
@@ -317,6 +323,15 @@ ul {
 <style lang="less">
 .el-card__body {
   height: 100%;
+}
+
+.el-tabs__header {
+	height: 30px;
+}
+
+.el-tabs__item {
+	font-weight: 700!important;
+	font-size: 1.25em!important;
 }
 </style>
 
