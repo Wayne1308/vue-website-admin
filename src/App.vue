@@ -75,6 +75,7 @@
 			const isChart = () => {
 				return route.meta?.view === 'hytxsysgk-chart'
 			}
+
 			return {
 				isChart
 			}
@@ -83,7 +84,7 @@
 </script>
 
 <style>
-
+@import url('./style/base.less');
 	* {
 		box-sizing: border-box;
 		font-size: 12px;

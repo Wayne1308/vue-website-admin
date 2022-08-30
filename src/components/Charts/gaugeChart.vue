@@ -112,23 +112,5 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-.item-box-container {
-    height: 100%;
-    width: 100%;
-    border: 1px solid red;
 
-    .item-title {
-        width: 100%;
-        height: 20px;
-        color: red;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .item-content-container {
-        width: 100%;
-        height: calc(100% - 20px);
-    }
-}
 </style>

@@ -1,96 +1,148 @@
 <template>
-	<el-scrollbar height="{{height}}" style="width:100%;">
-		<el-row :gutter="10" style="margin: 0;padding: 0;">
-			<el-col :span="12" :style="{height:((height-30)/4)+'px'}">
-				<el-card class="box-card" :body-style="{ padding: '20px',width:'90%' }">
-					<template #header>
-						<div class="card-header">
-							<span>个人信息</span>
-						</div>
-					</template>
-					<el-row :gutter="10" :style="{height:(((height-30)/4)-58 - 40)+'px'}">
-						<el-col :span="8" class="avatar">
-							<el-image style="width: 100px;border-radius: 100%;" :src="userinfo.header" :fit="fit" />
-						</el-col>
-						<el-col :span="16" style="line-height: 35px;">
-							<div class="name">欢迎登录，{{userinfo.name}}</div>
-							<div class="date">上次登录：{{userinfo.lastLoginDate}}</div>
-						</el-col>
-					</el-row>
+	<el-scrollbar :height="height">
+		<!-- 新 -->
+		<el-row justify="space-around" style="height: 250px">
+			<el-col :span="6">
+        <el-card class="box-card">
+          <div class="wh100 flex-col space-between ">
+            <div class="flex wh100">
+              <img src="../assets/Index/state.png" style="height: 4em">
+              <div class="flex-col ml10">
+                <span style="font-size: 0.75em; color: #6099b0">实验室软路由</span>
+                <span style="font-size: 2em; color: #75b358">已连接</span>
+              </div>
+            </div>
+            <ul>
+              <li>序列号</li>
+              <li>版本号</li>
+              <li>型号</li>
+              <li>上线时间</li>
+              <li>本地时间</li>
+            </ul>
+          </div>
+        </el-card>
+      </el-col>
+			<el-col :span="6">
+        <el-card class="box-card">
+          <div class="wh100 flex-col">
+            <div class="ali-center">
+              <span style="font-size: 0.75em; color: #9c9c9c">主机流量排行</span>
+              <el-icon><Top /></el-icon>
+            </div>
+            <div class="ali-center mb10 mt10">
+              <span style="font-size: 2em">9 M/s</span>
+              <span style="font-size: 0.75em; color: #c5806b" class="ml10">TOP1</span>
+            </div>
+            <div style="width: 100%; height: 100%">
+              <bar-chart></bar-chart>
+            </div>
+          </div>
+        </el-card>
+      </el-col>
+			<el-col :span="6">
+        <el-card class="box-card">
+					<div class=" flex-col space-between wh100">
+						<div class="">
+            <span style="font-size: 0.7em; color: #9c9c9c" class="">在线主机</span>
+            <div class="ali-end mt10">
+							<div class="mr20 flex-col flex-center">
+								<span class="big-num" style="color: #4f9cd6; margin-right: 5px">10</span>
+              	<span style="margin-bottom: 4px;" class="small-text">当前</span>
+							</div>
+							<div class="flex-col flex-center">
+								<span class="big-num" style="color: #4f9cd6; margin-right: 5px">10</span>
+              	<span style="margin-bottom: 4px;" class="small-text">最高</span>
+							</div>
+            </div>
+          </div>
+					<div class="">
+            <span style="font-size: 0.7em; color: #9c9c9c" class="">认证</span>
+            <div class="ali-end mt10">
+							<div class="mr20 flex-col flex-center">
+								<span class="big-num" style="color: #4f9cd6; margin-right: 5px">10</span>
+              	<span style="margin-bottom: 4px;" class="small-text">用户总数</span>
+							</div>
+							<div class="mr20 flex-col flex-center">
+								<span class="big-num" style="color: #4f9cd6; margin-right: 5px">10</span>
+              	<span style="margin-bottom: 4px;" class="small-text">未认证用户</span>
+							</div>
+							<div class="mr20 flex-col flex-center">
+								<span class="big-num" style="color: #4f9cd6; margin-right: 5px">10</span>
+              	<span style="margin-bottom: 4px;" class="small-text">web认证用户</span>
+							</div>
+							<div class="flex-col flex-center">
+								<span class="big-num" style="color: #4f9cd6; margin-right: 5px">10</span>
+              	<span style="margin-bottom: 4px;" class="small-text">ppwebo认证用户</span>
+							</div>
+            </div>
+          </div>
+					</div>
+        </el-card>
+      </el-col>
+			<el-col :span="6">
+        <el-card class="box-card">
+					<div class=" flex-col space-between wh100">
+						<div>
+            <span style="font-size: 0.75em; color: #9c9c9c">DHCP租约统计</span>
+            <div class="ali-end mt10">
+							<div class="mr20 flex-col flex-center">
+								<span class="big-num" style="color: #4f9cd6; margin-right: 5px">168</span>
+              	<span style="margin-bottom: 4px;" class="small-text">剩余可分配</span>
+							</div>
+							<div class="flex-col flex-center">
+								<span class="big-num" style="color: #4f9cd6; margin-right: 5px">1925</span>
+              	<span style="margin-bottom: 4px;" class="small-text">最多可分配</span>
+							</div>
+            </div>
+          </div>
+					<div>
+            <span style="font-size: 0.75em; color: #9c9c9c">活动连接</span>
+            <div class="mt10" style="width: 100%">
+							<span class="small-text ml20 mb10">50000/1000000 (50%)</span>
+							<el-progress :percentage="50" status="success" />
+            </div>
+          </div>
+					</div>
 				</el-card>
-			</el-col>
-			<el-col :span="12" :style="{height:((height-30)/4)+'px'}">
-				<el-card class="box-card" :body-style="{ padding: '20px',width:'90%' }">
-					<template #header>
-						<div class="card-header">
-							<span>快捷功能</span>
-						</div>
-					</template>
-					<el-row :gutter="10" :style="{height:(((height-30)/4)-58 - 40)+'px'}">
-						<el-col :span="6">
-							<router-link :to="'/News'">
-								<div class="quick_menu_item">
-									<div class="icon">
-										<el-icon>
-											<document-copy />
-										</el-icon>
-									</div>
-									<div class="text">发布文章</div>
-								</div>
-							</router-link>
-						</el-col>
-						<el-col :span="6">
-							<router-link :to="'/About'">
-								<div class="quick_menu_item">
-									<div class="icon">
-										<el-icon>
-											<document />
-										</el-icon>
-									</div>
-									<div class="text">公司介绍</div>
-								</div>
-							</router-link>
-						</el-col>
-						<el-col :span="6">
-							<router-link :to="'/Team'">
-								<div class="quick_menu_item">
-									<div class="icon">
-										<el-icon>
-											<user-filled />
-										</el-icon>
-									</div>
-									<div class="text">团队管理</div>
-								</div>
-							</router-link>
-						</el-col>
-						<el-col :span="6">
-							<router-link :to="'/Job'">
-								<div class="quick_menu_item">
-									<div class="icon">
-										<el-icon>
-											<sunset />
-										</el-icon>
-									</div>
-									<div class="text">招聘信息</div>
-								</div>
-							</router-link>
-						</el-col>
-					</el-row>
-				</el-card>
-			</el-col>
+      </el-col>
 		</el-row>
-		<el-row :gutter="10" style="margin: 0;padding: 0;margin-top: 20px;">
-			<el-col :style="{height:(chartheight)+'px'}">
-				<el-card class="box-card" :body-style="{ padding: '10px'}">
-					<template #header>
-						<div class="card-header">
-							<span>访问量统计</span>
-						</div>
-					</template>
-					<div id="chart" :style="{height:(((height-30)/4)*3 - 56 - 40 - 20 - 40 - 20)+'px'}"></div>
+
+    <el-row justify="space-around" style="height: 350px">
+      <el-col :span="8">
+        <el-card class="box-card">
+					<div class="title-content">
+						<span style="font-size: 1.25em; font-weight: 700">应用比例统计</span>
+					</div>
+					<ring-chart style="height: calc(100% - 30px)"></ring-chart>
 				</el-card>
-			</el-col>
-		</el-row>
+      </el-col>
+      <el-col :span="16">
+        <el-card class="box-card">
+					<div class="title-content">
+						<span style="font-size: 1.25em; font-weight: 700">流量监控</span>
+					</div>
+					<lljkChart style="height: calc(100% - 30px)"></lljkChart>
+				</el-card>
+      </el-col>
+    </el-row>
+
+    <el-row justify="space-around" style="height: 500px">
+      <el-col :span="24">
+        <el-card class="box-card">
+					<el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
+						<el-tab-pane label="物理接口" name="first">
+							<el-scrollbar :height="500">
+								<interTable></interTable>
+							</el-scrollbar>
+						</el-tab-pane>
+						<el-tab-pane label="虚拟接口" name="second">
+							22222
+						</el-tab-pane>
+					</el-tabs>
+				</el-card>
+      </el-col>
+    </el-row>
+
 	</el-scrollbar>
 </template>
 <script>
@@ -106,13 +158,23 @@
 		UserFilled,
 		Document
 	} from '@element-plus/icons-vue'
+
+  import barChart from "../components/Charts/barChart.vue";
+	import ringChart from "../components/Charts/ringChart.vue";
+	import lljkChart from "../components/Charts/lljkChart.vue";
+	import interTable from '../components/interTable.vue'
+
 	export default {
 		components: {
 			Avatar,
 			DocumentCopy,
 			Sunset,
 			UserFilled,
-			Document
+			Document,
+      barChart,
+			ringChart,
+			lljkChart,
+			interTable
 		},
 		data() {
 			return {
@@ -122,7 +184,8 @@
 					name: '--',
 					header: '../assets/img016.png',
 					lastLoginDate: '--'
-				}
+				},
+				activeName: 'first'
 			}
 		},
 		created: function() {
@@ -133,7 +196,7 @@
 			}
 		},
 		mounted: function() {
-			this.height = $(window).height();
+			this.height = $(window).height() - 120;
 			this.loadUserInfo();
 			this.loadReadData();
 		},
@@ -212,80 +275,63 @@
 					}]
 				};
 				this.chart.setOption(option);
+			},
+			handleClick: function(tab, e) {
+				console.log(tab, e);
 			}
 		}
 	}
 </script>
-<style scoped="scoped">
-	.el-row {
-		margin-bottom: 20px;
-	}
 
-	.el-row:last-child {
-		margin-bottom: 0;
-	}
+<style lang="less" scoped>
 
-	.card-header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-	}
+.el-col {
+  padding: 6px;
+}
 
-	.avatar {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		text-align: center;
-	}
+.box-card {
+  background-color: #FFF;
+  height: 100%;
+  width: 100%;
+}
 
-	.quick_menu_item {
-		width: 70%;
-		margin: 0 auto;
-		border: 1px solid #efefef;
-		background: #f8f8f8;
-		border-radius: 5px;
-		height: 100px;
-		text-align: center;
-		cursor: pointer;
-		text-decoration: none !important;
-		box-shadow: 0px 12px 32px 4px rgba(0, 0, 0, .04), 0px 8px 20px rgba(0, 0, 0, .08);
-	}
+ul {
+  List-style-type: none;
+}
 
-	.quick_menu_item .icon {
-		height:50px;
-		line-height: 50px;
-		font-size: 30px;
-		color: #222;
-		position: relative;
-		top: 5px;
-	}
+.big-num {
+  font-size: 2em;
+}
 
-	.quick_menu_item .text {
-		height: 50px;
-		line-height: 50px;
-		color: #222;
-		text-decoration: none !important
-	}
+.small-text {
+	font-size: 0.5em;
+	color: #9c9c9c;
+}
 
-	.quick_menu_item:hover {
-		background: #409EFF;
-	}
+.title-content {
+	height: 30px;
+	border-bottom: 1px solid #e5e6ea;
+}
 
-	.quick_menu_item:hover .icon,
-	.quick_menu_item:hover .text {
-		color: #fff;
-		text-decoration: none !important
-	}
-
-	a {
-		text-decoration: none;
-	}
-
-	.router-link-active {
-		text-decoration: none;
-	}
-
-	.el-scrollbar__wrap {
-		overflow-x: hidden !important;
-	}
+//.el-scrollbar__wrap {
+//  overflow-x: hidden !important;
+//}
 </style>
+
+
+<!--elementUI样式-->
+<style lang="less">
+.el-card__body {
+  height: 100%;
+}
+
+.el-tabs__header {
+	height: 30px;
+}
+
+.el-tabs__item {
+	font-weight: 700!important;
+	font-size: 1.25em!important;
+}
+</style>
+
