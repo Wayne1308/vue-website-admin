@@ -2,10 +2,7 @@
 	<div class="page-layout">
 		<el-container>
 			<router-view v-if="islogin && isChart()"></router-view>
-			<el-header v-if="islogin && !isChart()"
-				style="solid #040404ad;background-color: #000;box-shadow: rgb(0 0 0 / 8%) 0px 5px 5px 5px;z-index: 1;position: fixed;top:0px;left:0px;width:100%;height:60px">
-				<TopBar @loginout='loginout' :userinfo="userinfo"></TopBar>
-			</el-header>
+			<TopBar @loginout='loginout' :userinfo="userinfo" v-if="islogin && !isChart()"></TopBar>
 		</el-container>
 	</div>
 </template>
@@ -89,16 +86,25 @@
 		box-sizing: border-box;
 		font-size: 12px;
 	}
+
+	html, body, #app {
+		height: 100%;
+		width: 100%;
+	}
+
+	.page-layout {
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+	}
 	
 	.page-layout .el-main {
-		padding-top: 10px !important;
-		padding-left: 10px !important;
-		padding-right: 10px !important;
-		padding-bottom: 10px !important;
+		height: calc(100% - 60px);
+		width: 100%;
 		overflow: hidden;
 	}
 
-	.el-header .el-main {
+	.el-main {
 		padding: 0 !important;
 	}
 

@@ -24,6 +24,7 @@ import WirdLessSetControl from "../pages/WireLess/WirdLessSet_Control.vue"
 import RouterDiagram from "../pages/Diagram/Router_Diagram.vue"
 import Temperature from "../pages/Diagram/Temperature.vue"
 import Restart from "../pages/restart.vue"
+import Show3D from "../pages/3DShow/3DShow.vue"
 import Chart from '../pages/Chart.vue'
 
 
@@ -141,6 +142,11 @@ export default [{
 	path: "/Restart",
 	name: "重启路由器",
 	component: Restart
+},
+{
+	path: "/3DShow",
+	name: "3D姿态展示",
+	component: Show3D
 },
 {
 	path: "/Chart",

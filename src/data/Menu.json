@@ -84,5 +84,12 @@
 				"url": "NineShaft"
 			}
 		]
+	},
+	{
+		"id": 6,
+		"name": "3D姿态展示",
+		"icon": "WindPower",
+		"url": "3DShow",
+		"childrens": []
 	}
 ]

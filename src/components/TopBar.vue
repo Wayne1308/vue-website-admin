@@ -1,5 +1,5 @@
 <template>
-  <el-container>
+  <el-container style="height: 100vh;width: 100vw">
     <!-- 侧边栏 -->
     <el-aside ref="menuContainer" :style="{transform: 'translateX(' + menuTrans + ')', width: menuWidth}" class="menubar widerScreen showMenu" v-if="islogin">
       <MenuBar></MenuBar>
@@ -16,7 +16,6 @@
               </div>
               <div
                   style="
-              background: #000;
               color: #fff;
               font-size: 20px;
               text-align: center;
@@ -33,7 +32,7 @@
               </div>
             </div>
             <div class='header-left-container'>
-              <el-icon :size="100" @click="controlMenu"><Expand /></el-icon>
+              <el-icon :size="100" @click="controlMenu"><Expand v-if="menuWidth === 0" /><Fold v-else /></el-icon>
               <div class="tip-box">
                 <div class="tip-box-item">
                   <img src="../assets/header/cpu.png" alt="" srcset="">
@@ -248,7 +247,7 @@ export default {
               that.selectmenu = item.id;
               selectMenuDeep = [item.name]
             }
-            for (var i = 0; i < item.childrens.length; i++) {
+            for (var i = 0; i < (item.childrens || []).length; i++) {
               if (item.childrens[i].name == curpath) {
                 that.selectmenu = item.childrens[i].id;
                 selectMenuDeep = [item.name, item.childrens[i].name]
@@ -307,9 +306,15 @@ export default {
     .crumbs-nav {
       margin-bottom: 20px;
     }
+
+    .main-content {
+      height: 100%;
+      width: 100%;
+    }
   }
 
   .el-main {
+    height: calc(100% - 60px);
     background-color: #f1f2f6;
   }
 

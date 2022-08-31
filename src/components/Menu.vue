@@ -6,13 +6,9 @@
   <!-- 左侧菜单栏 -->
   <el-menu
     class="menubar"
-    active-text-color="#ffd04b"
-    background-color="#545c64"
-    text-color="#fff"
     @open="handleOpen"
     @close="handleClose"
     mode="vertical"
-    :default-active="0"
     menu-trigger="click"
     router="true"
     unique-opened="true"

@@ -12,10 +12,6 @@ export default {
   data() {
     return {
       matColStyle: {
-        backgroundImage:
-          this.bg === ""
-            ? ""
-            : `url(${require("@/assets/hubeijxkb/" + this.bg)})`,
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
         backgroundSize: "100% 100%"
