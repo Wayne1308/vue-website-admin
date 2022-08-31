@@ -33,7 +33,7 @@ function initStats() {
   stats.dom.style.right = '0px';
   stats.dom.style.left = 'unset';
   stats.dom.style.top = '0px';
-  document.body.appendChild(stats.dom);
+  // document.body.appendChild(stats.dom);
 
   function animate() {
     stats.begin();

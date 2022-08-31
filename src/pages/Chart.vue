@@ -40,7 +40,8 @@
                                     </mat-row>
                                 </mat-col>
                                 <mat-col :span="5">
-                                    <map-show></map-show>
+                                    <!-- <map-show></map-show> -->
+                                    <iframe style="width: 100%; height: 100%" src="https://maplab.amap.com/share/mapv/9e43817eaaf7997b00acebb7b667a43f"></iframe>
                                 </mat-col>
                             </mat-row>
                         </mat-col>
