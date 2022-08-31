@@ -40,8 +40,9 @@
                                     </mat-row>
                                 </mat-col>
                                 <mat-col :span="5">
+                                    <gdMap></gdMap>
                                     <!-- <map-show></map-show> -->
-                                    <iframe style="width: 100%; height: 100%" src="https://maplab.amap.com/share/mapv/9e43817eaaf7997b00acebb7b667a43f"></iframe>
+                                    <!-- <iframe style="width: 100%; height: 100%" src="https://maplab.amap.com/share/mapv/9e43817eaaf7997b00acebb7b667a43f"></iframe> -->
                                 </mat-col>
                             </mat-row>
                         </mat-col>
@@ -102,6 +103,7 @@ import gaugeChart from '../components/Charts/gaugeChart.vue';
 import rouseChart from '../components/Charts/rouseChart.vue';
 import mapShow from '../components/Charts/map.vue'
 import rollingIntroduction from '../components/RollingIntroduction.vue';
+import gdMap from '../components/Charts/gdMap.vue';
 
 // 模拟数据
 import xhqdData from '../data/charts/xhqd.json'
@@ -118,7 +120,8 @@ export default defineComponent({
         gaugeChart,
         rouseChart,
         mapShow,
-        rollingIntroduction
+        rollingIntroduction,
+        gdMap
     },
     setup(props, { emit }) {
 
