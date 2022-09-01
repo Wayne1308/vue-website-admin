@@ -1,7 +1,7 @@
 <template>
   <el-container style="height: 100vh;width: 100vw">
     <!-- 侧边栏 -->
-    <el-aside ref="menuContainer" :style="{transform: 'translateX(' + menuTrans + ')', width: menuWidth}" class="menubar widerScreen showMenu" v-if="islogin">
+    <el-aside ref="menuContainer" :style="{transform: 'translateX(' + menuTrans + ')', width: menuWidth}" class="menubar widerScreen showMenu">
       <MenuBar></MenuBar>
     </el-aside>
     <!-- 头部 + 主体 -->
@@ -39,19 +39,23 @@
                   <span>5%</span>
                 </div>
                 <div class="tip-box-item">
-                  <img src="../assets/header/cpu.png" alt="" srcset="">
+                  <img src="../assets/header/tempreter.png" alt="" srcset="">
+                  <span>55°C</span>
+                </div>
+                <div class="tip-box-item">
+                  <img src="../assets/header/sd.png" alt="" srcset="">
                   <span>8%</span>
                 </div>
                 <div class="tip-box-item">
-                  <img src="../assets/header/cpu.png" alt="" srcset="">
+                  <img src="../assets/header/down.png" alt="" srcset="">
                   <span>95.00B/s</span>
                 </div>
                 <div class="tip-box-item">
-                  <img src="../assets/header/cpu.png" alt="" srcset="">
+                  <img src="../assets/header/up.png" alt="" srcset="">
                   <span>134.00B/s</span>
                 </div>
                 <div class="tip-box-item">
-                  <img src="../assets/header/cpu.png" alt="" srcset="">
+                  <img src="../assets/header/computer.png" alt="" srcset="">
                   <span>1</span>
                 </div>
               </div>
@@ -82,9 +86,9 @@
                       <UserFilled />
                     </el-icon>
                     <span class="userInfoText">{{ userinfo ? userinfo.name : "未知" }}</span>
-                    <el-icon class="el-icon--right">
+                    <!-- <el-icon class="el-icon--right">
                       <ArrowDown></ArrowDown>
-                    </el-icon>
+                    </el-icon> -->
                   </div>
                   <template #dropdown>
                     <el-dropdown-menu>
@@ -404,6 +408,10 @@ export default {
         align-items: center;
         justify-content: center;
       }
+    }
+
+    .header-left-container {
+      display: none!important;
     }
   }
 </style>

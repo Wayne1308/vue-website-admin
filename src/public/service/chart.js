@@ -66,7 +66,7 @@ export async function fetchLperData() {
  * Iperf数据
  * @returns {Promise<*|{}>}
  */
-export async function fetchLperData() {
+export async function fetchLper2Data() {
   const CHART_OPTIONS = {
     textStyle: "#1987c0",
     color: ["#cb0131", "#bbbd11"],
