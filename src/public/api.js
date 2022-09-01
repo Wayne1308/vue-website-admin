@@ -23,7 +23,6 @@ export default {
 		menu_url: 'src/data/Menu.json', //菜单数据加载地址
 		viewrecord_url: 'src/data/ViewRecord.json', //访问量数据加载地址
 		entityfileds_url: 'src/data/entityfiles.json', //实体属性
-		dict_url: 'src/data/dicts.json', //数据字典, 
 		new_url: 'src/data/newsdata.json', //新闻数据, 
 		records_url: 'src/data/recordsdata.json', //访问记录数据
 		team_url: 'src/data/teamdata.json', //核心团队数
@@ -139,4 +138,28 @@ export default {
 			callback && callback(response);
 		})
 	},
+	loadData: function(url, pama) {
+		utils.showloadding();
+		return new Promise((resolve, reject) => {
+			axios({
+				method: 'get',
+				url: config.baseURL + url,
+				headers: {
+					'Content-Type': 'application/json; charset=utf-8',
+				},
+				data:JSON.stringify(pama),
+				responseType: 'json', // default
+				responseEncoding: 'utf8', // default
+				dataType: 'json',
+			}).then(response => {
+				utils.hiddenloadding();
+				resolve(response)
+			}).catch(err => {
+				utils.hiddenloadding();
+				reject(err)
+			})
+		})
+
+	},
+
 }

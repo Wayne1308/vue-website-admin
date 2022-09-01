@@ -1,8 +1,12 @@
 <template>
 	<div class="page-layout">
 		<el-container>
-			<router-view v-if="islogin && isChart()"></router-view>
-			<TopBar @loginout='loginout' :userinfo="userinfo" v-if="islogin && !isChart()"></TopBar>
+        <suspense>
+            <router-view v-if="islogin && isChart()"></router-view>
+        </suspense>
+        <suspense>
+            <TopBar @loginout='loginout' :userinfo="userinfo" v-if="islogin && !isChart()"></TopBar>
+        </suspense>
 		</el-container>
 	</div>
 </template>

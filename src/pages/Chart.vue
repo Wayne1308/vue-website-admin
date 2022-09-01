@@ -41,8 +41,6 @@
                                 </mat-col>
                                 <mat-col :span="5">
                                     <gdMap></gdMap>
-                                    <!-- <map-show></map-show> -->
-                                    <!-- <iframe style="width: 100%; height: 100%" src="https://maplab.amap.com/share/mapv/9e43817eaaf7997b00acebb7b667a43f"></iframe> -->
                                 </mat-col>
                             </mat-row>
                         </mat-col>
@@ -78,7 +76,15 @@
                     <mat-row>
                         <mat-col gutter="5">
                             <item-box title="九轴数据图">
-                              <line-chart :config="jzsjData"></line-chart>
+                              <el-button-group class="select-tab-container" size="small">
+                                <el-button @click="selectJZ('acceleration')" :plain="showPain('acceleration')" type="primary">加速度</el-button>
+                                <el-button @click="selectJZ('gyroscope')" :plain="showPain('gyroscope')" type="primary">陀螺仪</el-button>
+                                <el-button @click="selectJZ('temperature')" :plain="showPain('temperature')" type="primary">温度</el-button>
+                                <el-button @click="selectJZ('humidity')" :plain="showPain('humidity')" type="primary">湿度</el-button>
+                                <el-button @click="selectJZ('magnetic')" :plain="showPain('magnetic')" type="primary">磁场</el-button>
+                                <el-button @click="selectJZ('pressure')" :plain="showPain('pressure')"  type="primary">气压和高度</el-button>
+                              </el-button-group>
+                              <line-chart :config="jzsjData" :title="selectJzItem"></line-chart>
                             </item-box>
                         </mat-col>
                     </mat-row>
@@ -89,7 +95,7 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent, ref, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router';
 import utils from "../public/utils.js";
 import api from "../public/api.js";
@@ -107,9 +113,10 @@ import gdMap from '../components/Charts/gdMap.vue';
 
 // 模拟数据
 import xhqdData from '../data/charts/xhqd.json'
-import iperfData from '../data/charts/iperf.json'
 import yszkData from '../data/charts/yszk.json'
-import jzsjData from '../data/charts/jzsj.json'
+
+//
+import { fetchJzData, fetchLperData } from '../public/service/chart'
 export default defineComponent({
     name: 'chart',
     components: {
@@ -123,7 +130,7 @@ export default defineComponent({
         rollingIntroduction,
         gdMap
     },
-    setup(props, { emit }) {
+    async setup(props, { emit }) {
 
         // 海洋通信实验室概述数据
         const hytxsysgsData = [
@@ -150,13 +157,33 @@ export default defineComponent({
             router.push('/Login')
         }
 
+        const selectJzItem = ref('acceleration');
+        let jzsjData = ref({});
+        jzsjData.value = await fetchJzData('acceleration')
+        const selectJZ = async (val) => {
+            selectJzItem.value = val;
+            jzsjData.value = await fetchJzData(val || 'acceleration');
+            console.log('jzsjData', jzsjData.value);
+        }
+        const iperfData = await fetchLperData();
+        const xhqdData = await fetchJzData('acceleration');
+        const yszkData = await fetchJzData('acceleration');
+
+        const showPain = (name) => {
+            const isShow = name === selectJzItem.value
+            return !isShow
+        }
+
         return {
             xhqdData,
             iperfData,
             yszkData,
             jzsjData,
             hytxsysgsData,
-            goAdmin
+            goAdmin,
+            selectJZ,
+            selectJzItem,
+            showPain
         }
     }
 })
@@ -206,7 +233,6 @@ export default defineComponent({
     .mat-col-item {
         // padding: 10px;
     }
-
     .number-container {
         background-color: #0a1549;
         background: url('../assets/charts/item.png') no-repeat;
@@ -238,5 +264,13 @@ export default defineComponent({
             color: #fff27c;
         }
     }
+
+    .select-tab-container {
+        position: absolute;
+        top: -10px;
+        left: 100px;
+        z-index: 100;
+    }
+
 }
 </style>

@@ -59,6 +59,7 @@ export default defineComponent({
 
     .item-content-container {
         width: 100%;
+        position: relative;
         // height: calc(100% - 20px);
         height: v-bind(itemContentHeight);
     }

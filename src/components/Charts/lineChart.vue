@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import { defineComponent, toRefs } from 'vue'
+import {defineComponent, toRefs, ref, watch, computed} from 'vue';
 import utils from "@/public/utils.js";
 import api from "@/public/api.js";
 import $ from 'jquery';
@@ -51,73 +51,73 @@ export default defineComponent({
         }
     },
     setup(props, { emit }) {
-
-        const { config } = toRefs(props);
-        const grid = Object.assign({show: false}, config.value.grid || {});
-        const legend = Object.assign({show: true}, config.value.legend)
-        const valueData = config.value.valueData || [];
-        const series = []
-        valueData.forEach((item, i) => {
-            const color = config.value.color[i] || '#cb0131'
-            series.push({
-                type: 'line',
-                name: item.name,
-                data: item.value,
-                symbol:'emptyCircle',//拐点设置为实心
-                symbolSize:8,//拐点大小
-                lineStyle: {
-                    color: config.value.color[i] || '#cb0131'
-                },
-                areaStyle: {
-                    shadowColor: 'rgba(148, 95, 185, 0.5)',
-                    shadowBlur: 20,  //阴影
-                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                        offset: 0,
-                        color: color
-                    }, {
-                        offset: 0.6,
-                        color: '#0a103f'
-                    }]) // 区域线条渐变色
-                },
-                itemStyle: {
-                    color: color,
-                    borderWidth: 20
-                }
+        const options = computed(() => {
+            const grid = Object.assign({show: false}, props.config.grid || {});
+            const legend = Object.assign({show: true}, props.config.legend)
+            const valueData = props.config.valueData || [];
+            const series = []
+            valueData.forEach((item, i) => {
+                const color = props.config.color[i] || '#cb0131'
+                series.push({
+                    type: 'line',
+                    name: item.name,
+                    data: item.value,
+                    symbol:'emptyCircle',//拐点设置为实心
+                    symbolSize:8,//拐点大小
+                    lineStyle: {
+                        color: props.config.color[i] || '#cb0131'
+                    },
+                    areaStyle: {
+                        shadowColor: 'rgba(148, 95, 185, 0.5)',
+                        shadowBlur: 20,  //阴影
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            offset: 0,
+                            color: color
+                        }, {
+                            offset: 0.6,
+                            color: '#0a103f'
+                        }]) // 区域线条渐变色
+                    },
+                    itemStyle: {
+                        color: color,
+                        borderWidth: 20
+                    }
+                })
             })
-        })
 
-        const options = {
-            textStyle: {
-                color: config.value.textStyle || '#1987c0'
-            },
-            color: config.value.color || [],
-            legend,
-            grid,
-            tooltip: {
-                show: true,
-                trigger: 'axis'
-            },
-            xAxis: {
-                type: 'category',
-                data: config.value.xData  || [],
-                axisTick: {
-                    show: false
+            return {
+                textStyle: {
+                    color: props.config.textStyle || '#1987c0'
                 },
-                splitLine: {
-                    show: false
-                }
-            },
-            yAxis: {
-                type: 'value',
-                axisLine: {
-                    show: false
+                color: props.config.color || [],
+                legend,
+                grid,
+                tooltip: {
+                    show: true,
+                    trigger: 'axis'
                 },
-                splitLine: {
-                    show: false
-                }
-            },
-            series
-        }
+                xAxis: {
+                    type: 'category',
+                    data: props.config.xData  || [],
+                    axisTick: {
+                        show: false
+                    },
+                    splitLine: {
+                        show: false
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    axisLine: {
+                        show: false
+                    },
+                    splitLine: {
+                        show: false
+                    }
+                },
+                series
+            }
+        })
         return {
             options
         }
