@@ -31,10 +31,12 @@
                             <mat-row direction="column">
                                 <mat-col :span="1" gutter="5px">
                                     <mat-row class="number-container">
-                                        <mat-col v-for="(item, i) in  hytxsysgsData" :key="i">
+                                        <mat-col v-for="(item, i) in hytxsysgsData" :key="i" span="1">
                                             <div class="number-box">
                                                 <div>{{ item.value }}</div>
-                                                <span class="text">{{ item.text }}(单位：{{ item.unit }})</span>
+                                                <span class="text">
+                                                    {{ item.text }}(单位：{{ item.unit }})
+                                                </span>
                                             </div>
                                         </mat-col>
                                     </mat-row>
@@ -50,22 +52,26 @@
                                     <item-box title="温度 ｜ 湿度">
                                         <mat-row>
                                             <mat-col>
-                                                <gauge-chart></gauge-chart>
+                                                <gauge-chart
+                                                    :data="sdwdData ? sdwdData.temperature : {}"
+                                                ></gauge-chart>
                                             </mat-col>
                                             <mat-col>
-                                                <gauge-chart></gauge-chart>
+                                                <gauge-chart
+                                                    :data="sdwdData ? sdwdData.humidity : {}"
+                                                ></gauge-chart>
                                             </mat-col>
                                         </mat-row>
                                     </item-box>
                                 </mat-col>
                                 <mat-col gutter="5">
                                     <item-box title="终端分布">
-                                        <rouse-chart></rouse-chart>
+                                        <rouse-chart :data="zdfbData"></rouse-chart>
                                     </item-box>
                                 </mat-col>
                                 <mat-col gutter="5">
                                     <item-box style="max-height: 200px" title="实验室介绍">
-                                        <rolling-introduction></rolling-introduction>
+                                        <rolling-introduction :introductData="sysjsData"></rolling-introduction>
                                     </item-box>
                                 </mat-col>
                             </mat-row>
@@ -76,15 +82,51 @@
                     <mat-row>
                         <mat-col gutter="5">
                             <item-box title="九轴数据图">
-                              <el-button-group class="select-tab-container" size="small">
-                                <el-button @click="selectJZ('acceleration')" :plain="showPain('acceleration')" type="primary">加速度</el-button>
-                                <el-button @click="selectJZ('gyroscope')" :plain="showPain('gyroscope')" type="primary">陀螺仪</el-button>
-                                <el-button @click="selectJZ('temperature')" :plain="showPain('temperature')" type="primary">温度</el-button>
-                                <el-button @click="selectJZ('humidity')" :plain="showPain('humidity')" type="primary">湿度</el-button>
-                                <el-button @click="selectJZ('magnetic')" :plain="showPain('magnetic')" type="primary">磁场</el-button>
-                                <el-button @click="selectJZ('pressure')" :plain="showPain('pressure')"  type="primary">气压和高度</el-button>
-                              </el-button-group>
-                              <line-chart :config="jzsjData" :title="selectJzItem"></line-chart>
+                                <el-button-group class="select-tab-container" size="small">
+                                    <el-button
+                                        @click="selectJZ('acceleration')"
+                                        :plain="showPain('acceleration')"
+                                        type="primary"
+                                    >
+                                        加速度
+                                    </el-button>
+                                    <el-button
+                                        @click="selectJZ('gyroscope')"
+                                        :plain="showPain('gyroscope')"
+                                        type="primary"
+                                    >
+                                        陀螺仪
+                                    </el-button>
+                                    <el-button
+                                        @click="selectJZ('temperature')"
+                                        :plain="showPain('temperature')"
+                                        type="primary"
+                                    >
+                                        温度
+                                    </el-button>
+                                    <el-button
+                                        @click="selectJZ('humidity')"
+                                        :plain="showPain('humidity')"
+                                        type="primary"
+                                    >
+                                        湿度
+                                    </el-button>
+                                    <el-button
+                                        @click="selectJZ('magnetic')"
+                                        :plain="showPain('magnetic')"
+                                        type="primary"
+                                    >
+                                        磁场
+                                    </el-button>
+                                    <el-button
+                                        @click="selectJZ('pressure')"
+                                        :plain="showPain('pressure')"
+                                        type="primary"
+                                    >
+                                        气压和高度
+                                    </el-button>
+                                </el-button-group>
+                                <line-chart :config="jzsjData" :title="selectJzItem"></line-chart>
                             </item-box>
                         </mat-col>
                     </mat-row>
@@ -95,28 +137,37 @@
 </template>
 
 <script>
-import { defineComponent, ref, reactive } from 'vue'
+import { defineComponent, ref, reactive } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import utils from "../public/utils.js";
-import api from "../public/api.js";
+import utils from '../public/utils.js';
+import api from '../public/api.js';
 import $ from 'jquery';
-import * as echarts from 'echarts'
-import matRow from '../components/layout/mat-row.vue'
-import matCol from '../components/layout/mat-col.vue'
-import itemBox from '../components/ItemBox.vue'
+import * as echarts from 'echarts';
+import matRow from '../components/layout/mat-row.vue';
+import matCol from '../components/layout/mat-col.vue';
+import itemBox from '../components/ItemBox.vue';
 import lineChart from '../components/Charts/lineChart.vue';
 import gaugeChart from '../components/Charts/gaugeChart.vue';
 import rouseChart from '../components/Charts/rouseChart.vue';
-import mapShow from '../components/Charts/map.vue'
+import mapShow from '../components/Charts/map.vue';
 import rollingIntroduction from '../components/RollingIntroduction.vue';
 import gdMap from '../components/Charts/gdMap.vue';
 
-// 模拟数据
-import xhqdData from '../data/charts/xhqd.json'
-import yszkData from '../data/charts/yszk.json'
+// // 模拟数据
+// import xhqdData from '../data/charts/xhqd.json'
+// import yszkData from '../data/charts/yszk.json'
 
 //
-import { fetchJzData, fetchLperData } from '../public/service/chart'
+import {
+    fetchJzData,
+    fetchLperData,
+    fetchXhqdData,
+    fetchYszkData,
+    fetchwdsdData,
+    fetchzdfbData,
+    fetchSysjsData,
+    fetchSysgsData
+} from '../public/service/chart';
 export default defineComponent({
     name: 'chart',
     components: {
@@ -128,65 +179,60 @@ export default defineComponent({
         rouseChart,
         mapShow,
         rollingIntroduction,
-        gdMap
+        gdMap,
     },
     async setup(props, { emit }) {
 
-        // 海洋通信实验室概述数据
-        const hytxsysgsData = [
-            {
-                text: '实验室总人数',
-                value: '24',
-                unit: '人'
-            },
-            {
-                text: '技术人员占比',
-                value: '50',
-                unit: '%'
-            },
-            {
-                text: '产品投资额',
-                value: '3000',
-                unit: '万元'
-            }
-        ]
-
-        const router = new useRouter()
+        const router = new useRouter();
         // 跳转到后台管理系统
         const goAdmin = () => {
-            router.push('/Login')
-        }
+            router.push('/Login');
+        };
 
         const selectJzItem = ref('acceleration');
         let jzsjData = ref({});
-        jzsjData.value = await fetchJzData('acceleration')
-        const selectJZ = async (val) => {
+        jzsjData.value = await fetchJzData('acceleration');
+        const selectJZ = async val => {
             selectJzItem.value = val;
             jzsjData.value = await fetchJzData(val || 'acceleration');
             console.log('jzsjData', jzsjData.value);
-        }
+        };
+        // iperf 模块数据
         const iperfData = await fetchLperData();
-        const xhqdData = await fetchJzData('acceleration');
-        const yszkData = await fetchJzData('acceleration');
+        // 信号强度数据
+        const xhqdData = await fetchXhqdData();
+        // 营收状况数据
+        const yszkData = await fetchYszkData();
+        // 湿度温度数据
+        const sdwdData = await fetchwdsdData();
+        // 终端分布
+        const zdfbData = await fetchzdfbData();
+        // 实验室介绍
+        const sysjsData = await fetchSysjsData();
+        // 海洋通信实验室概述数据
+        const hytxsysgsData = await fetchSysgsData();
 
-        const showPain = (name) => {
-            const isShow = name === selectJzItem.value
-            return !isShow
-        }
+        const showPain = name => {
+            const isShow = name === selectJzItem.value;
+            return !isShow;
+        };
 
         return {
             xhqdData,
             iperfData,
             yszkData,
             jzsjData,
+            sdwdData,
+            zdfbData,
+            sysjsData,
             hytxsysgsData,
             goAdmin,
             selectJZ,
             selectJzItem,
-            showPain
-        }
-    }
-})
+            showPain,
+        };
+    },
+});
 </script>
 
 <style lang="less" scoped>
@@ -196,7 +242,6 @@ export default defineComponent({
     // border: 1px solid red;
     background: url('../assets/charts/chart.png') no-repeat;
     background-size: 100% 100%;
-
 
     .chart-header {
         // border: 1px solid green;
@@ -219,7 +264,6 @@ export default defineComponent({
             color: #ffffff;
             cursor: pointer;
         }
-
     }
 
     .chart-main {
@@ -244,6 +288,7 @@ export default defineComponent({
         align-items: center;
         flex-direction: column;
         padding: 0 10px;
+        width: 100%;
 
         .text {
             display: inline-flex;
@@ -271,6 +316,5 @@ export default defineComponent({
         left: 100px;
         z-index: 100;
     }
-
 }
 </style>

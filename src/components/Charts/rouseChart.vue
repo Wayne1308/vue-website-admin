@@ -4,31 +4,44 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
-import utils from "@/public/utils.js";
-import api from "@/public/api.js";
+import { defineComponent } from 'vue';
+import utils from '@/public/utils.js';
+import api from '@/public/api.js';
 import $ from 'jquery';
-import echart from './echart.vue'
+import echart from './echart.vue';
 
 export default defineComponent({
     name: 'lineChart',
     components: {
-        echart
+        echart,
     },
     props: {
         title: {
             type: String,
-            default: 'title'
-        }
+            default: 'title',
+        },
+        data: {
+            type: Array,
+            default: () => {
+                return [
+                    { value: 40, name: '湖南' },
+                    { value: 38, name: '河北' },
+                    { value: 32, name: '广东' },
+                    { value: 30, name: '四川' },
+                    { value: 28, name: '浙江' },
+                    { value: 26, name: '江苏' },
+                    { value: 22, name: '湖北' },
+                ];
+            },
+        },
     },
     setup(props, { emit }) {
-
         const lineChartOption = {
             legend: {
                 show: false,
             },
             tooltip: {
-                show: true
+                show: true,
             },
             series: [
                 {
@@ -38,30 +51,22 @@ export default defineComponent({
                     center: ['50%', '50%'],
                     roseType: 'area',
                     itemStyle: {
-                        borderRadius: 0
+                        borderRadius: 0,
                     },
                     label: {
                         show: true,
-                        color: 'auto'
+                        color: 'auto',
                     },
                     labelLine: {},
-                    data: [
-                        { value: 40, name: '湖南' },
-                        { value: 38, name: '河北' },
-                        { value: 32, name: '广东' },
-                        { value: 30, name: '四川' },
-                        { value: 28, name: '浙江' },
-                        { value: 26, name: '江苏' },
-                        { value: 22, name: '湖北' }
-                    ]
-                }
-                ]
-            }
+                    data: props?.data || [],
+                },
+            ],
+        };
         return {
-            lineChartOption
-        }
-    }
-})
+            lineChartOption,
+        };
+    },
+});
 </script>
 
 <style lang="less" scoped>

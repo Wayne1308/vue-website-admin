@@ -1,0 +1,12 @@
+{
+  "zxzj": {
+      "now": 1,
+      "top": 10
+  },
+  "auth": {
+      "total": 100,
+      "noAuth": 10,
+      "webAuth": 50,
+      "ppwebo": 40
+  }
+}

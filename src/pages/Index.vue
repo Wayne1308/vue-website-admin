@@ -8,15 +8,15 @@
 							<img src="../assets/Index/state.png" style="height: 4em">
 							<div class="flex-col ml10">
 								<span style="font-size: 0.75em; color: #6099b0">实验室软路由</span>
-								<span style="font-size: 2em; color: #75b358">已连接</span>
+								<span style="font-size: 2em; color: #75b358">{{ status.status || '-' }}</span>
 							</div>
 						</div>
 						<ul>
-							<li>序列号</li>
-							<li>版本号</li>
-							<li>型号</li>
-							<li>上线时间</li>
-							<li>本地时间</li>
+							<li>序列号：{{ status.serial || '-' }}</li>
+							<li>版本号：{{ status.Version || '-' }}</li>
+							<li>型号：{{ status.model || '-' }}</li>
+							<li>上线时间：{{ status.upDate || '-' }}</li>
+							<li>本地时间：{{ status.downDate || '-' }}</li>
 						</ul>
 					</div>
 				</el-card>
@@ -31,11 +31,11 @@
 							</el-icon>
 						</div>
 						<div class="ali-center mb10 mt10">
-							<span style="font-size: 2em">9 M/s</span>
-							<span style="font-size: 0.75em; color: #c5806b" class="ml10">TOP1</span>
+							<span style="font-size: 2em">{{ zjllData?.tip?.spead || 0}} M/s</span>
+							<span style="font-size: 0.75em; color: #c5806b" class="ml10">TOP{{ zjllData?.tip?.ranking || 0}}</span>
 						</div>
 						<div style="width: 100%; height: 100%">
-							<bar-chart></bar-chart>
+							<bar-chart :config="zjllData.barchart || {}"></bar-chart>
 						</div>
 					</div>
 				</el-card>
@@ -47,11 +47,11 @@
 							<span style="font-size: 0.7em; color: #9c9c9c" class="">在线主机</span>
 							<div class="ali-end mt10">
 								<div class="mr20 flex-col flex-center">
-									<span class="big-num" style="color: #4f9cd6; margin-right: 5px">10</span>
+									<span class="big-num" style="color: #4f9cd6; margin-right: 5px">{{ zxzjData?.zxzj?.now || '-' }}</span>
 									<span style="margin-bottom: 4px;" class="small-text">当前</span>
 								</div>
 								<div class="flex-col flex-center">
-									<span class="big-num" style="color: #4f9cd6; margin-right: 5px">10</span>
+									<span class="big-num" style="color: #4f9cd6; margin-right: 5px">{{ zxzjData?.zxzj?.top || '-' }}</span>
 									<span style="margin-bottom: 4px;" class="small-text">最高</span>
 								</div>
 							</div>
@@ -60,19 +60,19 @@
 							<span style="font-size: 0.7em; color: #9c9c9c" class="">认证</span>
 							<div class="ali-end mt10">
 								<div class="mr20 flex-col flex-center">
-									<span class="big-num" style="color: #4f9cd6; margin-right: 5px">10</span>
+									<span class="big-num" style="color: #4f9cd6; margin-right: 5px">{{ zxzjData?.auth?.total || '-' }}</span>
 									<span style="margin-bottom: 4px;" class="small-text">用户总数</span>
 								</div>
 								<div class="mr20 flex-col flex-center">
-									<span class="big-num" style="color: #4f9cd6; margin-right: 5px">10</span>
+									<span class="big-num" style="color: #4f9cd6; margin-right: 5px">{{ zxzjData?.auth?.noAuth || '-' }}</span>
 									<span style="margin-bottom: 4px;" class="small-text">未认证用户</span>
 								</div>
 								<div class="mr20 flex-col flex-center">
-									<span class="big-num" style="color: #4f9cd6; margin-right: 5px">10</span>
+									<span class="big-num" style="color: #4f9cd6; margin-right: 5px">{{ zxzjData?.auth?.webAuth || '-' }}</span>
 									<span style="margin-bottom: 4px;" class="small-text">web认证用户</span>
 								</div>
 								<div class="flex-col flex-center">
-									<span class="big-num" style="color: #4f9cd6; margin-right: 5px">10</span>
+									<span class="big-num" style="color: #4f9cd6; margin-right: 5px">{{ zxzjData?.auth?.ppwebo || '-' }}</span>
 									<span style="margin-bottom: 4px;" class="small-text">ppwebo认证用户</span>
 								</div>
 							</div>
@@ -87,20 +87,20 @@
 							<span style="font-size: 0.75em; color: #9c9c9c">DHCP租约统计</span>
 							<div class="ali-end mt10">
 								<div class="mr20 flex-col flex-center">
-									<span class="big-num" style="color: #4f9cd6; margin-right: 5px">168</span>
+									<span class="big-num" style="color: #4f9cd6; margin-right: 5px">{{ DHCPData.surplus }}</span>
 									<span style="margin-bottom: 4px;" class="small-text">剩余可分配</span>
 								</div>
 								<div class="flex-col flex-center">
-									<span class="big-num" style="color: #4f9cd6; margin-right: 5px">1925</span>
+									<span class="big-num" style="color: #4f9cd6; margin-right: 5px">{{ DHCPData.most }}</span>
 									<span style="margin-bottom: 4px;" class="small-text">最多可分配</span>
 								</div>
 							</div>
 						</div>
 						<div>
 							<span style="font-size: 0.75em; color: #9c9c9c">活动连接</span>
-							<div class="mt10" style="width: 100%">
-								<span class="small-text ml20 mb10">50000/1000000 (50%)</span>
-								<el-progress :percentage="50" status="success" />
+							<div class="mt10" style="width: 100%" v-if="DHCPData.has">
+								<span class="small-text ml20 mb10">{{ DHCPData.has }}/{{ DHCPData.all }} ({{ ((DHCPData.has / DHCPData.all) * 100).toFixed(2) }}%)</span>
+								<el-progress :percentage="(DHCPData.has / DHCPData.all) * 100" status="success" />
 							</div>
 						</div>
 					</div>
@@ -114,7 +114,7 @@
 					<div class="title-content">
 						<span style="font-size: 1.25em; font-weight: 700">应用比例统计</span>
 					</div>
-					<ring-chart class="ring-chart" ></ring-chart>
+					<ring-chart class="ring-chart" :data="yyblData" ></ring-chart>
 				</el-card>
 			</mat-col>
 			<mat-col gutter="6px" :span="16">
@@ -122,7 +122,7 @@
 					<div class="title-content">
 						<span style="font-size: 1.25em; font-weight: 700">流量监控</span>
 					</div>
-					<lljkChart class="lljk-chart"></lljkChart>
+					<lljkChart class="lljk-chart" :data="lljkData"></lljkChart>
 				</el-card>
 			</mat-col>
 		</mat-row>
@@ -169,6 +169,9 @@ import interTable from '../components/interTable.vue'
 import matCol from "../components/layout/mat-col.vue";
 import matRow from "../components/layout/mat-row.vue";
 
+// 
+import { fetchIndexStatusData, fetchIndexZjllData, fetchIndexZxzjData, fetchIndexDHCPData, fetchIndexYyblData, fetchIndexLljkData } from '../public/service/index'
+
 export default {
 	components: {
 		Avatar,
@@ -192,7 +195,12 @@ export default {
 				header: '../assets/img016.png',
 				lastLoginDate: '--'
 			},
-			activeName: 'first'
+			activeName: 'first',
+			status: {},
+			zjllData: {},
+			zxzjData: {},
+			DHCPData: {},
+			lljkData: {}
 		}
 	},
 	created: function () {
@@ -202,10 +210,17 @@ export default {
 			return;
 		}
 	},
-	mounted: function () {
+	mounted: async function () {
 		this.height = $(window).height() - 120;
 		this.loadUserInfo();
-		this.loadReadData();
+		// this.loadReadData();
+		// 
+		this.status = await fetchIndexStatusData();
+		this.zjllData = await fetchIndexZjllData();
+		this.zxzjData = await fetchIndexZxzjData();
+		this.DHCPData = await fetchIndexDHCPData();
+		this.yyblData = await fetchIndexYyblData();
+		this.lljkData = await fetchIndexLljkData();
 	},
 	methods: {
 		loadUserInfo: function () {
@@ -225,7 +240,7 @@ export default {
 					utils.showerror("信息加载失败！");
 					return;
 				}
-				that.initRecordChart(res.data);
+				// that.initRecordChart(res.data);
 			});
 		},
 		initRecordChart: function (data) {
@@ -320,7 +335,7 @@ ul {
 	height: 250px;
 }
 .two-level {
-	height: 350px;
+	height: 400px;
 }
 .three-level {
 	height: 500px;

@@ -36,27 +36,27 @@
               <div class="tip-box">
                 <div class="tip-box-item">
                   <img src="../assets/header/cpu.png" alt="" srcset="">
-                  <span>5%</span>
+                  <span>{{ headerStatus.cpu || 0 }}%</span>
                 </div>
                 <div class="tip-box-item">
                   <img src="../assets/header/tempreter.png" alt="" srcset="">
-                  <span>55°C</span>
+                  <span>{{ headerStatus.tempreter || 0 }}°C</span>
                 </div>
                 <div class="tip-box-item">
                   <img src="../assets/header/sd.png" alt="" srcset="">
-                  <span>8%</span>
+                  <span>{{ headerStatus.sd || 0 }}%</span>
                 </div>
                 <div class="tip-box-item">
                   <img src="../assets/header/down.png" alt="" srcset="">
-                  <span>95.00B/s</span>
+                  <span>{{ headerStatus.down || 0 }}B/s</span>
                 </div>
                 <div class="tip-box-item">
                   <img src="../assets/header/up.png" alt="" srcset="">
-                  <span>134.00B/s</span>
+                  <span>{{ headerStatus.up || 0 }}B/s</span>
                 </div>
                 <div class="tip-box-item">
                   <img src="../assets/header/computer.png" alt="" srcset="">
-                  <span>1</span>
+                  <span>{{ headerStatus.computer || 0 }}</span>
                 </div>
               </div>
             </div>
@@ -162,6 +162,8 @@ import {
   User,
 } from "@element-plus/icons-vue";
 
+import { fetchHeaderStatusData } from '../public/service/header'
+
 export default {
   props: ["userinfo"],
   data() {
@@ -171,7 +173,8 @@ export default {
       crumbsData: [],
       drawerMenu: false,
       menuTrans: 0,
-      menuWidth: '200px'
+      menuWidth: '200px',
+      headerStatus: {},
     };
   },
   components: {
@@ -186,7 +189,8 @@ export default {
     UserForm,
     ChangePwd,
   },
-  mounted() {
+  async mounted() {
+    this.headerStatus = await fetchHeaderStatusData()
   },
   watch: {
     $route: async function (newV) {

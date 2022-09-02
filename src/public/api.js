@@ -138,6 +138,7 @@ export default {
 			callback && callback(response);
 		})
 	},
+	// 获取数据
 	loadData: function(url, pama) {
 		utils.showloadding();
 		return new Promise((resolve, reject) => {

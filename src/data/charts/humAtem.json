@@ -1,0 +1,10 @@
+{
+    "humidity": {
+        "name": "湿度",
+        "value": 100
+    },
+    "temperature": {
+        "name": "温度",
+        "value": 40
+    }
+}

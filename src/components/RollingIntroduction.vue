@@ -31,32 +31,7 @@ const props = defineProps({
         {
           title: '实际应用',
           content: `实际应用content`
-        },
-        {
-          title: '实际应用1',
-          content: `实际应用1content`
-        },
-        {
-          title: '实际应用1',
-          content: `实际应用1content`
-        },
-        {
-          title: '实际应用1',
-          content: `实际应用1content`
-        },
-        {
-          title: '实际应用1',
-          content: `实际应用1content`
-        },
-        {
-          title: '实际应用1',
-          content: `实际应用1content`
-        },
-        {
-          title: '实际应用1',
-          content: `实际应用1content`
-        },
-
+        }
       ]
     }
   }
