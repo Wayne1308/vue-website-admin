@@ -123,7 +123,7 @@
               <el-breadcrumb-item v-for="(item, i) in crumbsData" :key="i" :to="{ path: '/Index' }">{{ item }}</el-breadcrumb-item>
             </el-breadcrumb>
           </div>
-          <div class="main-content">
+          <div class="main-content" :class="!$route.meta.bg ? 'content-bg': ''">
             <router-view @logined="logined" :userinfo="userinfo" style=""></router-view>
           </div>
         </div>
@@ -195,7 +195,6 @@ export default {
   watch: {
     $route: async function (newV) {
       this.crumbsData = await this.getCrumbsData(newV.name);
-      console.log('crumbsData', this.crumbsData);
     }
   },
   methods: {
@@ -417,5 +416,9 @@ export default {
     .header-left-container {
       display: none!important;
     }
+  }
+
+  .content-bg {
+    background-color: #FFFFFF;
   }
 </style>

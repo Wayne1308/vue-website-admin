@@ -133,12 +133,12 @@
 					<el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
 						<el-tab-pane label="物理接口" name="first">
 							<el-scrollbar :height="500">
-								<interTable></interTable>
+								<interTable :columns="tableOne.columns || []" :tableData="tableOne.tableData || []"></interTable>
 							</el-scrollbar>
 						</el-tab-pane>
 						<el-tab-pane label="虚拟接口" name="second">
 							<el-scrollbar :height="500">
-								<interTable></interTable>
+								<interTable :columns="tableTwo.columns || []" :tableData="tableTwo.tableData || []"></interTable>
 							</el-scrollbar>
 						</el-tab-pane>
 					</el-tabs>
@@ -170,7 +170,7 @@ import matCol from "../components/layout/mat-col.vue";
 import matRow from "../components/layout/mat-row.vue";
 
 // 
-import { fetchIndexStatusData, fetchIndexZjllData, fetchIndexZxzjData, fetchIndexDHCPData, fetchIndexYyblData, fetchIndexLljkData } from '../public/service/index'
+import { fetchIndexStatusData, fetchIndexZjllData, fetchIndexZxzjData, fetchIndexDHCPData, fetchIndexYyblData, fetchIndexLljkData,fetchIndexTableData } from '../public/service/index'
 
 export default {
 	components: {
@@ -200,7 +200,9 @@ export default {
 			zjllData: {},
 			zxzjData: {},
 			DHCPData: {},
-			lljkData: {}
+			lljkData: {},
+			tableOne: {},
+			tableTwo: {}
 		}
 	},
 	created: function () {
@@ -221,6 +223,8 @@ export default {
 		this.DHCPData = await fetchIndexDHCPData();
 		this.yyblData = await fetchIndexYyblData();
 		this.lljkData = await fetchIndexLljkData();
+		this.tableOne = await fetchIndexTableData();
+		this.tableTwo = await fetchIndexTableData();
 	},
 	methods: {
 		loadUserInfo: function () {

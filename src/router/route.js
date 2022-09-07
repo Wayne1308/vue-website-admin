@@ -36,7 +36,10 @@ export default [{
 {
 	path: "/Index",
 	name: "首页",
-	component: Index
+	component: Index,
+	meta: {
+		bg: true
+    },
 },
 {
 	path: "/Login",
@@ -46,7 +49,10 @@ export default [{
 {
 	path: "/SysStatus",
 	name: "系统状态",
-	component: SysStatus
+	component: SysStatus,
+	meta: {
+		bg: true
+    },
 },
 {
 	path: "/Record",
@@ -152,7 +158,8 @@ export default [{
 	path: "/Chart",
 	name: "海洋通信实验室概况",
     meta: {
-        view: 'hytxsysgk-chart'
+        view: 'hytxsysgk-chart',
+		bg: true
     },
 	component: Chart
 }]

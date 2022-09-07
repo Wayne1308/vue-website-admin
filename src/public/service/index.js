@@ -56,3 +56,12 @@ import api from "../api";
   const res = await api.loadData("src/data/index/lljk.json");
   return res?.data || {}
 }
+
+/**
+ * 获取表信息
+ * @returns {Promise<*|{}>}
+ */
+ export async function fetchIndexTableData() {
+  const res = await api.loadData("src/data/index/table.json");
+  return res?.data || {}
+}

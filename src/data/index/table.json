@@ -1,0 +1,62 @@
+{
+    "columns": [
+        {
+            "label": "时间",
+            "col": "date"
+        },
+        {
+            "label": "名称",
+            "col": "name"
+        },
+        {
+            "label": "州名",
+            "col": "state"
+        },
+        {
+            "label": "城市",
+            "col": "city"
+        },
+        {
+            "label": "地址",
+            "col": "address"
+        },
+        {
+            "label": "zip",
+            "col": "zip"
+        }
+    ],
+    "tableData": [
+        {
+            "date": "2016-05-03",
+            "name": "Tom",
+            "state": "California",
+            "city": "Los Angeles",
+            "address": "No. 189, Grove St, Los Angeles",
+            "zip": "CA 90036"
+        },
+        {
+            "date": "2016-05-03",
+            "name": "Tom",
+            "state": "California",
+            "city": "Los Angeles",
+            "address": "No. 189, Grove St, Los Angeles",
+            "zip": "CA 90036"
+        },
+        {
+            "date": "2016-05-03",
+            "name": "Tom",
+            "state": "California",
+            "city": "Los Angeles",
+            "address": "No. 189, Grove St, Los Angeles",
+            "zip": "CA 90036"
+        },
+        {
+            "date": "2016-05-03",
+            "name": "Tom",
+            "state": "California",
+            "city": "Los Angeles",
+            "address": "No. 189, Grove St, Los Angeles",
+            "zip": "CA 90036"
+        }
+    ]
+}
