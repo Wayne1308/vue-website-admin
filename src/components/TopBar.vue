@@ -8,8 +8,8 @@
     <el-container>
       <!-- 头部 -->
       <el-header class="top_bar">
-        <el-row>
-          <el-col :span="19">
+        <el-row style="height: 100%">
+          <el-col style="height: 100%" :span="19">
             <div class="logo-container">
               <div class="menubar Narrower" v-if="islogin">
                 <el-icon :size="20" @click="clickMenuExpand"><Expand /></el-icon>
@@ -85,10 +85,12 @@
                     <el-icon :size="14">
                       <UserFilled />
                     </el-icon>
-                    <span class="userInfoText">{{ userinfo ? userinfo.name : "未知" }}</span>
-                    <!-- <el-icon class="el-icon--right">
-                      <ArrowDown></ArrowDown>
-                    </el-icon> -->
+                    <span class="userInfoText">
+                      {{ userinfo ? userinfo.name : "未知" }}
+                      <el-icon class="el-icon--right" style="margin: 0">
+                        <ArrowDown></ArrowDown>
+                    </el-icon>
+                    </span>
                   </div>
                   <template #dropdown>
                     <el-dropdown-menu>
@@ -190,7 +192,11 @@ export default {
     ChangePwd,
   },
   async mounted() {
-    this.headerStatus = await fetchHeaderStatusData()
+    this.headerStatus = await fetchHeaderStatusData();
+    const islogin = utils.islogined();
+    if(!islogin) {
+      this.$router.push('/Login')
+    }
   },
   watch: {
     $route: async function (newV) {
@@ -209,8 +215,7 @@ export default {
         }
         utils.logout(function (res) {
           if (res == "success") {
-            //发出退出登录事件
-            that.$emit("loginout", {}); //通知界面登录了
+            that.$router.push('/Chart')
           }
         });
       });
@@ -288,6 +293,7 @@ export default {
     line-height: 60px;
     text-align: center;
     color: #000;
+    white-space: nowrap;
   }
 
   .top_btn i {
@@ -296,7 +302,8 @@ export default {
   }
 
   .top_btn span {
-    margin-left: 10px;
+    margin-left: 5px;
+    margin-right: 10px;
   }
 
   .top_btn:hover {

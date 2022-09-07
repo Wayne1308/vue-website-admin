@@ -1,12 +1,10 @@
 <template>
 	<div class="page-layout">
 		<el-container>
-        <suspense>
-            <router-view v-if="islogin && isChart()"></router-view>
-        </suspense>
-        <suspense>
-            <TopBar @loginout='loginout' :userinfo="userinfo" v-if="islogin && !isChart()"></TopBar>
-        </suspense>
+			<suspense>
+				<!-- <TopBar @loginout='loginout' :userinfo="userinfo" v-if="islogin"></TopBar> -->
+				<router-view></router-view>
+			</suspense>
 		</el-container>
 	</div>
 </template>
@@ -19,7 +17,7 @@
 	import Chart from './pages/Chart.vue'
 
 	import { useRoute, useRouter } from 'vue-router';
-	import { onMounted, computed, ref } from 'vue';
+	import { onMounted, computed, ref, watch } from 'vue';
 	export default {
 		//components组件注册
 		components: {
@@ -31,7 +29,7 @@
 			return {
 				//默认非登录状态,检测登录状态，并跳转到对于界面,
 				// islogin: utils.islogined(),
-				islogin: true,
+				// islogin: true,
 				height: $(window).height(),
 				width: $(window).width() - 20,
 				userinfo: null
@@ -39,46 +37,43 @@
 		},
 		mounted: function() {//对渲染完html的dom节点进行操作
 			this.height = $(window).height();
-			if (this.islogin) {
-				this.loadUserInfo();
-			}
 		},
 		methods: {//编写js函数
-			logined: function() {
-				this.islogin = utils.islogined();
-				this.$router.push("Index");
+		},
+		setup() {
+			const route = new useRoute();
+			const router = new useRouter()
 
-				this.loadUserInfo();
+			// 是否是图表界面
+			const isChart = computed(() => {
+				return route.meta?.view === 'hytxsysgk-chart'
+			})
 
-				this.$forceUpdate();
-			},
-			loginout: function() {
-				this.islogin = utils.islogined();
-				this.$router.push("Login");
+			// 登陆状态
+			let islogin = ref(null);
 
-				this.$forceUpdate();
-			},
-			loadUserInfo: function() {
-				var that = this;
+			// 获取用戶信息
+			const userinfo = ref(null);
+			const loadUserInfo = function() {
 				api.loadUserInfoData(function(res) {
 					if (!res || res.status != 200 || !res.data) {
 						utils.showerror("信息加载失败！");
 						return;
 					}
-					that.userinfo = res.data;
+					userinfo.value = res.data;
 				});
-			},
-
-		},
-		setup() {
-			const route = new useRoute();
-
-			const isChart = () => {
-				return route.meta?.view === 'hytxsysgk-chart'
+			};
+			// 登出
+			const loginout = function() {
+				islogin.value = utils.islogined()
+				router.push("Chart");
 			}
 
 			return {
-				isChart
+				isChart,
+				islogin,
+				userinfo,
+				loginout
 			}
 		}
 	}

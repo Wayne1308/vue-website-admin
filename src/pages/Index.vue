@@ -207,10 +207,10 @@ export default {
 	},
 	created: function () {
 		//判断当前是否已经登录，未登录转到登录界面
-		if (!utils.islogined()) { //已登录，自动转到主页
-			this.$router.push("Login");
-			return;
-		}
+		// if (!utils.islogined()) { //已登录，自动转到主页
+		// 	this.$router.push("Login");
+		// 	return;
+		// }
 	},
 	mounted: async function () {
 		this.height = $(window).height() - 120;

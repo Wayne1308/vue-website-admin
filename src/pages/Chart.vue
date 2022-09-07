@@ -188,14 +188,13 @@ export default defineComponent({
         const goAdmin = () => {
             router.push('/Login');
         };
-
+        
         const selectJzItem = ref('acceleration');
         let jzsjData = ref({});
         jzsjData.value = await fetchJzData('acceleration');
         const selectJZ = async val => {
             selectJzItem.value = val;
             jzsjData.value = await fetchJzData(val || 'acceleration');
-            console.log('jzsjData', jzsjData.value);
         };
         // iperf 模块数据
         const iperfData = await fetchLperData();

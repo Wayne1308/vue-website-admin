@@ -47,12 +47,14 @@ const selectMenu = (e) => {
   
 <style lang="less" scoped>
   .rollingIntroduction-container {
+    scrollbar-color: transparent transparent;
     width: 100%;
     height: 100%;
     display: flex;
     // border: 1px solid blue;
 
     .rolling-menu {
+      scrollbar-color: transparent transparent;
       box-sizing: border-box;
       width: 30%;
       height: 100%;

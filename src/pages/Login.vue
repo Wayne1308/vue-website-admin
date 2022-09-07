@@ -42,7 +42,7 @@ export default {
   mounted: function () {
     if (utils.islogined()) {
       //已登录，自动转到主页
-      this.$router.push("Index");
+      this.$router.push("/Index");
       return;
     }
     this.panelTop = ($(window).height() - this.loginPanelWidht) / 2 + "px";
@@ -63,8 +63,7 @@ export default {
       utils.login(this.loginForm, function (res) {
         utils.hiddenloadding();
         if (res == "success") {
-          that.$emit("logined", {}); //通知界面登录了
-          that.$router.push("Index");
+          that.$router.push("/Index");
         }
       });
     },

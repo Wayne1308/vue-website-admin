@@ -38,7 +38,7 @@ export default {
 		setting_url: 'src/data/settingdata.json', //数据字典数据
 	},
 	loadUserInfoData: function(callback) {
-		utils.showloadding();
+		// utils.showloadding();
 		axios({
 			method: 'post',
 			url: config.baseURL + this.server_urls.userinfo_url,
@@ -46,12 +46,12 @@ export default {
 				'Content-Type': 'application/json; charset=utf-8',
 			},
 		}).then(response => {
-			utils.hiddenloadding();
+			// utils.hiddenloadding();
 			callback && callback(response);
 		})
 	},
 	loadMenu: function(callback) {
-		utils.showloadding();
+		// utils.showloadding();
 		axios({
 			method: 'get',
 			url: config.baseURL + this.server_urls.menu_url,
@@ -64,7 +64,7 @@ export default {
 		})
 	},
 	loadRole: function(callback) {
-		utils.showloadding();
+		// utils.showloadding();
 		axios({
 			method: 'get',
 			url: config.baseURL + this.server_urls.rolelist_url,
@@ -72,12 +72,12 @@ export default {
 				'Content-Type': 'application/json; charset=utf-8',
 			},
 		}).then(response => {
-			utils.hiddenloadding();
+			// utils.hiddenloadding();
 			callback && callback(response);
 		})
 	},
 	loadViewRecordData: function(callback) {
-		utils.showloadding();
+		// utils.showloadding();
 		axios({
 			method: 'get',
 			url: config.baseURL + this.server_urls.viewrecord_url,
@@ -85,12 +85,12 @@ export default {
 				'Content-Type': 'application/json; charset=utf-8',
 			},
 		}).then(response => {
-			utils.hiddenloadding();
+			// utils.hiddenloadding();
 			callback && callback(response);
 		})
 	},
 	loadEntityFiledsDatas: function(callback) {
-		utils.showloadding();
+		// utils.showloadding();
 		axios({
 			method: 'get',
 			url: config.baseURL + this.server_urls.entityfileds_url,
@@ -101,12 +101,12 @@ export default {
 			responseEncoding: 'utf8', // default
 			dataType: 'json',
 		}).then(response => {
-			utils.hiddenloadding();
+			// utils.hiddenloadding();
 			callback && callback(response);
 		})
 	},
 	loadDictDatas: function(callback) {
-		utils.showloadding();
+		// utils.showloadding();
 		axios({
 			method: 'get',
 			url: config.baseURL + this.server_urls.dict_url,
@@ -117,12 +117,12 @@ export default {
 			responseEncoding: 'utf8', // default
 			dataType: 'json',
 		}).then(response => {
-			utils.hiddenloadding();
+			// utils.hiddenloadding();
 			callback && callback(response);
 		})
 	},
 	loadPageDatas: function(url, pama, callback) {
-		utils.showloadding();
+		// utils.showloadding();
 		axios({
 			method: 'get',
 			url: config.baseURL + url,
@@ -134,13 +134,12 @@ export default {
 			responseEncoding: 'utf8', // default
 			dataType: 'json',
 		}).then(response => {
-			utils.hiddenloadding();
+			// utils.hiddenloadding();
 			callback && callback(response);
 		})
 	},
 	// 获取数据
 	loadData: function(url, pama) {
-		utils.showloadding();
 		return new Promise((resolve, reject) => {
 			axios({
 				method: 'get',
@@ -153,10 +152,8 @@ export default {
 				responseEncoding: 'utf8', // default
 				dataType: 'json',
 			}).then(response => {
-				utils.hiddenloadding();
 				resolve(response)
 			}).catch(err => {
-				utils.hiddenloadding();
 				reject(err)
 			})
 		})
